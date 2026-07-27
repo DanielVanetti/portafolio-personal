@@ -15,7 +15,9 @@ defineProps<{
   <article class="row">
     <span class="row__index label__index mono-meta">{{ index }}</span>
 
-    <h3 class="row__title">{{ title }}</h3>
+    <!-- h2: en Inicio estas filas son el primer nivel bajo el h1, así que
+         un h3 rompería el orden de encabezados. -->
+    <h2 class="row__title">{{ title }}</h2>
 
     <p class="row__context mono-meta muted">{{ context }}</p>
 

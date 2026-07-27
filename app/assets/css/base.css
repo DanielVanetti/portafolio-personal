@@ -10,6 +10,10 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Reserva siempre el hueco de la barra de scroll. Sin esto, bloquear el
+     scroll durante el preloader la hace desaparecer y toda la página se
+     ensancha de golpe: un layout shift enorme. */
+  scrollbar-gutter: stable;
 }
 
 body,

@@ -25,14 +25,10 @@ onMounted(() => {
 
   sessionStorage.setItem('dg-preloader', '1')
 
-  // El scroll queda bloqueado mientras la cortina está arriba.
-  document.body.style.overflow = 'hidden'
-
   const progress = { value: 0 }
 
   const tl = gsap.timeline({
     onComplete: () => {
-      document.body.style.overflow = ''
       document.documentElement.classList.remove('js-preloader')
       done.value = true
       openMotionGate()
@@ -58,10 +54,6 @@ onMounted(() => {
       ease: 'power4.inOut'
     })
 })
-
-onUnmounted(() => {
-  document.body.style.overflow = ''
-})
 </script>
 
 <template>
@@ -72,12 +64,12 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/*
+ * Siempre fuera del flujo. Si la cortina entrara y saliera del flujo —o si
+ * bloqueáramos el scroll de la página— el contenido daría un salto de una
+ * pantalla entera: un CLS de 1.0 medido con Lighthouse.
+ */
 .preloader {
-  display: none;
-}
-
-/* Solo se ve si hay JS y el usuario no pidió menos movimiento. */
-:global(.js-preloader) .preloader {
   position: fixed;
   inset: 0;
   z-index: 200;
@@ -86,6 +78,14 @@ onUnmounted(() => {
   justify-content: space-between;
   padding: var(--gutter);
   will-change: transform;
+  /* Invisible por defecto: sin JS o con reduced-motion nunca tapa nada. */
+  visibility: hidden;
+  pointer-events: none;
+}
+
+:global(.js-preloader) .preloader {
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .preloader__mark {
