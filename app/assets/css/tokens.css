@@ -38,6 +38,9 @@
   --fs-h2: clamp(2.5rem, 7vw, 3.5rem);
   --fs-h1: clamp(3rem, 11vw, 6rem);
   --fs-display: clamp(3.25rem, 15vw, 9rem);
+  /* Solo para el nombre del hero: calibrado para que la línea más larga
+     ("GONZÁLEZ") llegue casi al borde sin desbordar. */
+  --fs-hero: clamp(3.5rem, 20vw, 15rem);
 
   --lh-tight: 0.92;   /* titulares display */
   --lh-snug: 1.1;     /* H2/H3 */
