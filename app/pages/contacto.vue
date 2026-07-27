@@ -11,6 +11,8 @@ useHead({
     }
   ]
 })
+
+useReveal()
 </script>
 
 <template>
@@ -20,7 +22,7 @@ useHead({
         <div class="col-1-6">
           <SectionLabel index="01" text="Contacto" />
         </div>
-        <h1 class="col-1-8 page-head__title">
+        <h1 class="col-1-8 page-head__title" data-reveal="lines">
           La forma corta: escribime un correo.
         </h1>
       </div>
@@ -38,7 +40,7 @@ useHead({
 
     <section class="section details">
       <div class="wrap grid">
-        <div class="col-1-6 detail">
+        <div class="col-1-6 detail" data-reveal="up">
           <SectionLabel text="En Línea" />
           <ul class="detail__list" role="list">
             <li v-for="social in SOCIALS" :key="social.href">
@@ -55,7 +57,7 @@ useHead({
           </ul>
         </div>
 
-        <div class="col-7-12 detail">
+        <div class="col-7-12 detail" data-reveal="up">
           <SectionLabel text="Dónde Estoy" />
           <p class="detail__place">{{ SITE.location }}</p>
           <p class="mono-meta muted">{{ SITE.coordinates }}</p>

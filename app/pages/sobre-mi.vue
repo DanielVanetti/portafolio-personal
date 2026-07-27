@@ -12,6 +12,8 @@ useHead({
   ]
 })
 
+useReveal()
+
 const education = [
   {
     period: 'En curso',
@@ -56,7 +58,7 @@ const principles = [
         <div class="col-1-6">
           <SectionLabel index="01" text="Sobre Mí" />
         </div>
-        <h1 class="col-1-8 page-head__title">
+        <h1 class="col-1-8 page-head__title" data-reveal="lines">
           Ingeniero en sistemas, desarrollador web por oficio.
         </h1>
       </div>
@@ -64,7 +66,7 @@ const principles = [
 
     <section class="section">
       <div class="wrap grid">
-        <div class="col-2-6 bio">
+        <div class="col-2-6 bio" data-reveal="up">
           <p class="lead">
             Vivo en {{ SITE.location }} y llevo un par de años trabajando en
             proyectos que ya tenían usuarios antes de que yo llegara.
@@ -106,7 +108,7 @@ const principles = [
       <div class="wrap">
         <SectionLabel index="02" text="Cómo Trabajo" />
         <div class="principles__grid">
-          <article v-for="p in principles" :key="p.index" class="principle">
+          <article v-for="p in principles" :key="p.index" class="principle" data-reveal="up">
             <span class="principle__index label__index mono-meta">{{ p.index }}</span>
             <h2 class="principle__title">{{ p.title }}</h2>
             <p class="muted">{{ p.text }}</p>
@@ -118,7 +120,7 @@ const principles = [
     <section class="section">
       <div class="wrap">
         <hr class="rule">
-        <p class="closing__text">
+        <p class="closing__text" data-reveal="up">
           El trabajo está en
           <NuxtLink to="/proyectos" class="link-underline">Proyectos</NuxtLink>.
         </p>

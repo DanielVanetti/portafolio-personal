@@ -14,21 +14,27 @@ useHead({
 })
 
 const year = new Date().getFullYear()
+
+useReveal()
 </script>
 
 <template>
   <div>
     <!-- ( HERO ) — el nombre a sangre, casi tocando los bordes -->
     <section class="hero">
-      <div class="wrap hero__inner">
+      <div class="wrap hero__inner" data-parallax>
         <SectionLabel :text="SITE.tagline" />
 
-        <h1 class="hero__name">
-          <span class="hero__line">Daniel</span>
-          <span class="hero__line">González</span>
+        <h1 class="hero__name" data-reveal="hero">
+          <span class="reveal-line">
+            <span class="reveal-line__inner" data-reveal-line>Daniel</span>
+          </span>
+          <span class="reveal-line">
+            <span class="reveal-line__inner" data-reveal-line>González</span>
+          </span>
         </h1>
 
-        <p class="hero__statement lead">
+        <p class="hero__statement lead" data-reveal="up">
           Del soporte en producción a construir productos completos.
         </p>
 
@@ -46,7 +52,7 @@ const year = new Date().getFullYear()
           <SectionLabel index="01" text="Sobre Mí" />
         </div>
 
-        <div class="col-7-12 stack">
+        <div class="col-7-12 stack" data-reveal="up">
           <p class="lead">
             Soy ingeniero en Sistemas de Información y estudio la Licenciatura en
             Desarrollo Web en la Universidad Nacional.
@@ -79,22 +85,13 @@ const year = new Date().getFullYear()
           <div class="col-1-6">
             <SectionLabel index="03" text="Trabajo Seleccionado" />
           </div>
-          <p class="col-7-12 lead">
+          <p class="col-7-12 lead" data-reveal="up">
             Tres proyectos donde el problema real no era el que aparecía en el
             enunciado.
           </p>
         </div>
 
-        <div class="rows">
-          <ProjectRow
-            v-for="project in FEATURED_PROJECTS"
-            :key="project.index"
-            :index="project.index"
-            :title="project.title"
-            :context="project.context"
-            :stack="project.stack"
-          />
-        </div>
+        <FeaturedProjects :projects="FEATURED_PROJECTS" class="rows" />
 
         <NuxtLink to="/proyectos" class="cta-link link-underline">
           Ver los cinco proyectos
@@ -106,7 +103,7 @@ const year = new Date().getFullYear()
     <section class="section closing">
       <div class="wrap">
         <hr class="rule">
-        <p class="closing__text">
+        <p class="closing__text" data-reveal="up">
           Estoy abierto a proyectos y a posiciones donde haya algo que
           <NuxtLink to="/contacto" class="link-underline">construir en serio</NuxtLink>.
         </p>
@@ -132,10 +129,6 @@ const year = new Date().getFullYear()
   font-weight: 300;
   line-height: var(--lh-tight);
   letter-spacing: -0.045em;
-}
-
-.hero__line {
-  display: block;
 }
 
 .hero__statement {
@@ -173,8 +166,7 @@ const year = new Date().getFullYear()
 }
 
 .rows {
-  /* La última fila cierra con su propia línea inferior. */
-  border-bottom: var(--hairline);
+  /* El borde inferior lo pone el propio componente. */
   margin-bottom: var(--sp-6);
 }
 

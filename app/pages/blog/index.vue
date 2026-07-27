@@ -11,6 +11,8 @@ useHead({
     }
   ]
 })
+
+useReveal()
 </script>
 
 <template>
@@ -20,7 +22,7 @@ useHead({
         <div class="col-1-6">
           <SectionLabel index="01" text="Blog" />
         </div>
-        <h1 class="col-1-8 page-head__title">
+        <h1 class="col-1-8 page-head__title" data-reveal="lines">
           Notas de lo que me fue costando aprender.
         </h1>
       </div>
@@ -28,7 +30,7 @@ useHead({
 
     <section class="section">
       <div class="wrap posts">
-        <article v-for="post in POSTS" :key="post.slug" class="post-row">
+        <article v-for="post in POSTS" :key="post.slug" class="post-row" data-reveal="up">
           <NuxtLink :to="`/blog/${post.slug}`" class="post-row__link">
             <div class="post-row__meta">
               <span class="mono-meta label__index">{{ post.index }}</span>

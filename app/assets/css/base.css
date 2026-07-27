@@ -186,6 +186,45 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
+/* ---------- Reveals -----------------------------------------
+   Los estados iniciales cuelgan de .js-motion, que solo se aplica
+   si hay JavaScript y el usuario no pidió menos movimiento.
+   Sin esa clase el contenido se ve tal cual, sin animación. */
+
+.js-motion [data-reveal='up'] {
+  opacity: 0;
+}
+
+.js-motion [data-reveal='lines'] {
+  /* Se revela cuando SplitType ya partió el texto en líneas; evita
+     el parpadeo del titular sin partir. */
+  opacity: 0;
+}
+
+.js-motion [data-reveal='lines'].is-split {
+  opacity: 1;
+}
+
+/* El hero ya trae las líneas partidas en el marcado, así que puede
+   arrancar directamente en su posición de entrada. */
+.js-motion [data-reveal='hero'] .reveal-line__inner {
+  transform: translateY(110%);
+}
+
+/* Máscara de línea: el interior sube desde abajo. El padding compensa
+   los descendentes (g, y, j) que el overflow recortaría. */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.reveal-line__inner {
+  display: block;
+  will-change: transform;
+}
+
 /* ---------- Transición de página ---------------------------- */
 
 .page-enter-active,

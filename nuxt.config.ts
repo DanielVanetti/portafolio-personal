@@ -15,7 +15,20 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#FAF9F6' }
       ],
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+      script: [
+        {
+          /**
+           * Marca el documento antes del primer pintado. Solo con estas clases
+           * el CSS oculta los elementos que se van a animar y muestra el
+           * preloader, así que sin JS —o con reduced-motion— el contenido
+           * queda visible desde el inicio y no hay cortina que levantar.
+           */
+          innerHTML:
+            "try{var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('js-motion');if(!sessionStorage.getItem('dg-preloader'))d.classList.add('js-preloader')}}catch(e){}",
+          tagPosition: 'head'
+        }
+      ]
     },
     // Transicion entre rutas: fade sobrio, sin desplazamientos largos.
     pageTransition: { name: 'page', mode: 'out-in' }

@@ -19,6 +19,8 @@ useHead({
 
 /** Circular: el último post enlaza de vuelta al primero. */
 const nextPost = POSTS[(POSTS.findIndex(p => p.slug === post.slug) + 1) % POSTS.length]
+
+useReveal()
 </script>
 
 <template>
@@ -29,7 +31,7 @@ const nextPost = POSTS[(POSTS.findIndex(p => p.slug === post.slug) + 1) % POSTS.
           <SectionLabel :index="post.index" :text="post.tag" />
         </div>
 
-        <h1 class="col-1-8 page-head__title">{{ post.title }}</h1>
+        <h1 class="col-1-8 page-head__title" data-reveal="lines">{{ post.title }}</h1>
 
         <p class="col-1-6 page-head__meta mono-meta muted">
           {{ formatDate(post.date) }} · {{ post.readingTime }} de lectura
@@ -39,7 +41,7 @@ const nextPost = POSTS[(POSTS.findIndex(p => p.slug === post.slug) + 1) % POSTS.
 
     <section class="section">
       <div class="wrap grid">
-        <div class="col-2-8 prose">
+        <div class="col-2-8 prose" data-reveal="up">
           <template v-for="(block, i) in post.body" :key="i">
             <h2 v-if="block.type === 'h2'" class="prose__heading">{{ block.text }}</h2>
             <blockquote v-else-if="block.type === 'quote'" class="prose__quote">

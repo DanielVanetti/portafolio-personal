@@ -11,6 +11,8 @@ useHead({
     }
   ]
 })
+
+useReveal()
 </script>
 
 <template>
@@ -20,7 +22,7 @@ useHead({
         <div class="col-1-6">
           <SectionLabel index="01" text="Proyectos" />
         </div>
-        <h1 class="col-1-8 page-head__title">
+        <h1 class="col-1-8 page-head__title" data-reveal="lines">
           Cinco proyectos, contados por el problema que resolvían.
         </h1>
         <p class="col-1-6 page-head__note muted">
@@ -37,7 +39,7 @@ useHead({
           class="grid project"
           :class="{ 'project--flip': i % 2 === 1 }"
         >
-          <div class="project__body">
+          <div class="project__body" data-reveal="up">
             <SectionLabel :index="project.index" :text="project.context" />
 
             <h2 class="project__title">{{ project.title }}</h2>
@@ -58,7 +60,7 @@ useHead({
             </p>
           </div>
 
-          <div class="project__plate">
+          <div class="project__plate" data-reveal="up">
             <ProjectPlate
               :index="project.index"
               :title="project.title"
@@ -72,7 +74,7 @@ useHead({
     <section class="section closing">
       <div class="wrap">
         <hr class="rule">
-        <p class="closing__text">
+        <p class="closing__text" data-reveal="up">
           ¿Algo de esto se parece a lo que necesitás?
           <NuxtLink to="/contacto" class="link-underline">Escribime</NuxtLink>.
         </p>

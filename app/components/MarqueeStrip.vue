@@ -3,7 +3,8 @@
  * Franja de texto en loop horizontal.
  * El segundo grupo es una copia visual para que el loop no tenga costura;
  * va oculto a lectores de pantalla para no repetir el contenido.
- * La animación se activa en la Fase 4 (clase .is-animated).
+ * El loop es CSS puro sobre transform: sigue funcionando sin JavaScript
+ * y se detiene por completo con reduced-motion.
  */
 withDefaults(
   defineProps<{
@@ -41,6 +42,28 @@ withDefaults(
 .marquee__track {
   display: flex;
   width: max-content;
+  /* -50% = exactamente un grupo. Como los dos son idénticos, el salto
+     al reiniciar es invisible. */
+  animation: marquee-scroll 45s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* La regla global acorta las duraciones, lo que dejaría la franja
+   saltada a mitad de recorrido. Aquí se apaga del todo. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none !important;
+  }
 }
 
 .marquee__group {
