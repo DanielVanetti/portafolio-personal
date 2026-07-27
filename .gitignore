@@ -9,6 +9,9 @@ dist
 # Node dependencies
 node_modules
 
+# Paquete de entrega (se regenera con scripts/empaquetar.ps1)
+entrega.zip
+
 # Logs
 logs
 *.log

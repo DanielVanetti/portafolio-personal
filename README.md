@@ -1,75 +1,64 @@
-# Nuxt Minimal Starter
+# Portafolio personal — Daniel González Picado
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Sitio estático construido con Nuxt 4 para la Tarea 1 del curso Arquitectura de
+Información (Universidad Nacional). Dirección visual: **minimalista editorial
+con motion narrativo sutil**.
 
-## Setup
+Para los detalles de la entrega —URL publicada, cumplimiento de la rúbrica y
+resultados de Lighthouse— ver [`ENTREGA.md`](./ENTREGA.md).
 
-Make sure to install dependencies:
+## Puesta en marcha
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+npm run dev        # http://localhost:3000
 ```
 
-## Development Server
+## Comandos
 
-Start the development server on `http://localhost:3000`:
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run generate` | Genera el sitio estático en `.output/public` |
+| `npm run build` | Build de servidor (útil para comprobar que nada rompe el SSR) |
+| `npx serve .output/public` | Sirve la build estática en local |
 
-```bash
-# npm
-npm run dev
+## Estructura
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```
+app/
+├── app.vue              NuxtLayout + NuxtPage
+├── layouts/default.vue  Header y footer compartidos
+├── pages/               Las 5 páginas + blog/[slug].vue
+├── components/          AppHeader, AppFooter, SectionLabel, MarqueeStrip,
+│                        ProjectRow, ProjectPlate, FeaturedProjects, ThePreloader
+├── composables/         useReveal — reveals con GSAP y compuerta del preloader
+├── plugins/             gsap.client.ts
+├── data/                site.ts, projects.ts, posts.ts
+└── assets/css/          tokens.css, base.css
 ```
 
-## Production
+Nuxt 4 usa `app/` como directorio fuente, así que `pages/`, `layouts/` y
+`components/` viven ahí y no en la raíz.
 
-Build the application for production:
+## Convenciones del proyecto
 
-```bash
-# npm
-npm run build
+Las reglas de diseño y de animación están escritas como skills en `.claude/`:
 
-# pnpm
-pnpm build
+- [`.claude/skills/design-system/SKILL.md`](.claude/skills/design-system/SKILL.md) —
+  paleta, tipografía, layout y accesibilidad.
+- [`.claude/skills/motion-rules/SKILL.md`](.claude/skills/motion-rules/SKILL.md) —
+  presupuesto de animación y reglas duras.
 
-# yarn
-yarn build
+Dos que conviene conocer antes de tocar el código:
 
-# bun
-bun run build
-```
+1. **El contenido debe verse sin JavaScript.** Los estados iniciales de las
+   animaciones cuelgan de la clase `.js-motion`, que un script en línea del
+   `<head>` solo añade si hay JS y el usuario no pidió `prefers-reduced-motion`.
+2. **Solo se anima `transform` y `opacity`.** Nada que provoque layout.
 
-Locally preview production build:
+## Nota sobre npm
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+El `.npmrc` fija `legacy-peer-deps=true` para esquivar un bug de npm 10.9 (el que
+trae Node 22.12) al resolver las dependencias de pares de Vite. Con npm 11 o
+superior puede eliminarse.
