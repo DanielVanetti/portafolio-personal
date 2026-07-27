@@ -1,12 +1,235 @@
-/* Reset y estilos base — se completa en la Fase 2 */
+/* ============================================================
+   BASE — reset, tipografía y utilidades de layout
+   ============================================================ */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-body {
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body,
+h1, h2, h3, h4,
+p, figure, blockquote,
+ul, ol, dl, dd {
   margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---------- Tipografía ------------------------------------- */
+
+body {
   background: var(--bg);
   color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  /* Evita el scroll horizontal que provocan marquees y titulares
+     de gran tamaño en pantallas estrechas. */
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: var(--lh-snug);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+
+p {
+  text-wrap: pretty;
+  max-width: 62ch;
+}
+
+::selection {
+  background: var(--coffee);
+  color: var(--bg);
+}
+
+/* ---------- Enlaces ----------------------------------------- */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Subrayado que se dibuja de izquierda a derecha.
+   Solo transform — sin repintado de layout. */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.15em;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after,
+.link-underline.is-active::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Foco visible ------------------------------------ */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---------- Utilidades de layout ---------------------------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+/* Grid editorial de 12 columnas. En móvil colapsa a una sola,
+   así que las utilidades .col-* solo actúan desde 900px. */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--grid-gap);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .col-1-6 { grid-column: 1 / 7; }
+  .col-2-6 { grid-column: 2 / 7; }
+  .col-2-8 { grid-column: 2 / 9; }
+  .col-1-8 { grid-column: 1 / 9; }
+  .col-7-12 { grid-column: 7 / 13; }
+  .col-8-12 { grid-column: 8 / 13; }
+  .col-full { grid-column: 1 / 13; }
+}
+
+.rule {
+  border: 0;
+  border-top: var(--hairline);
+  margin: 0;
+}
+
+/* ---------- Recursos gráficos firma ------------------------- */
+
+/* Label editorial: ( 01 — SOBRE MÍ ) */
+.label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.label__index {
+  color: var(--accent);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.mono-meta {
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Transición de página ---------------------------- */
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* ---------- Accesibilidad de movimiento ---------------------
+   Regla dura: reduced-motion desactiva todo salvo fades de 0.2s. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.2s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Salto al contenido ------------------------------ */
+
+.skip-link {
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: 100;
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--ink);
+  color: var(--bg);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
 }

@@ -1,11 +1,83 @@
-/* Tokens del sistema de diseno — se completa en la Fase 2 */
+/* ============================================================
+   TOKENS — sistema de diseño "minimalista editorial"
+   Fuente de verdad: .claude/skills/design-system/SKILL.md
+   ============================================================ */
+
 :root {
-  --bg: #FAF9F6;
-  --ink: #141311;
-  --gray-600: #57534E;
-  --gray-300: #D6D3CE;
-  --coffee: #6F4E37;
-  --coffee-soft: #A78B72;
-  --bg-dark: #121110;
-  --ink-dark: #F5F3EF;
+  /* --- Color -------------------------------------------------
+     Los neutros trabajan, el café acentúa.
+     El café aparece en ≤10% de la superficie: numeraciones,
+     subrayados de hover y un detalle por sección. Nunca de fondo. */
+  --bg: #FAF9F6;          /* blanco roto cálido */
+  --ink: #141311;         /* negro tinta */
+  --gray-600: #57534E;    /* texto secundario */
+  --gray-300: #D6D3CE;    /* líneas y bordes hairline */
+  --coffee: #6F4E37;      /* acento sobre fondo claro — 7:1 sobre --bg */
+  --coffee-soft: #A78B72; /* acento sobre fondo oscuro */
+  --bg-dark: #121110;     /* secciones invertidas */
+  --ink-dark: #F5F3EF;    /* texto sobre oscuro */
+
+  /* Alias que cambian dentro de .invert — permiten que un mismo
+     componente funcione sobre fondo claro u oscuro sin duplicar CSS. */
+  --surface: var(--bg);
+  --text: var(--ink);
+  --text-muted: var(--gray-600);
+  --rule: var(--gray-300);
+  --accent: var(--coffee);
+
+  /* --- Tipografía --------------------------------------------
+     Máximo 2 familias. Escala de saltos grandes: nada de 14/15/17px. */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+
+  --fs-label: 0.75rem;   /* labels en mayúsculas */
+  --fs-sm: 1rem;         /* metadatos, pie de foto */
+  --fs-body: 1.25rem;    /* cuerpo de texto */
+  --fs-lead: 2rem;       /* entradilla */
+  --fs-h3: clamp(1.75rem, 3vw, 2rem);
+  --fs-h2: clamp(2.5rem, 7vw, 3.5rem);
+  --fs-h1: clamp(3rem, 11vw, 6rem);
+  --fs-display: clamp(3.25rem, 15vw, 9rem);
+
+  --lh-tight: 0.92;   /* titulares display */
+  --lh-snug: 1.1;     /* H2/H3 */
+  --lh-body: 1.6;     /* párrafos */
+  --ls-label: 0.12em; /* labels en mayúsculas */
+
+  /* --- Espaciado — escala de 8px ------------------------------ */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-6: 3rem;
+  --sp-8: 4rem;
+  --sp-12: 6rem;
+  --sp-16: 8rem;
+
+  /* Aire vertical de las secciones: 8–12rem en desktop */
+  --section-y: clamp(4rem, 9vw, 12rem);
+
+  /* --- Layout ------------------------------------------------- */
+  --page-max: 90rem;                        /* 1440px */
+  --gutter: clamp(1.25rem, 4vw, 4rem);      /* margen lateral de página */
+  --grid-gap: clamp(1rem, 2vw, 2rem);
+  --hairline: 1px solid var(--rule);
+
+  /* --- Motion ------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.3s;
+  --dur-base: 0.7s;
+}
+
+/* Secciones invertidas: se reasignan los alias y el acento pasa al
+   café claro, que sí alcanza contraste AA sobre negro. */
+.invert {
+  --surface: var(--bg-dark);
+  --text: var(--ink-dark);
+  --text-muted: #9C948A;
+  --rule: #2E2B28;
+  --accent: var(--coffee-soft);
+
+  background: var(--surface);
+  color: var(--text);
 }

@@ -1,30 +1,25 @@
-<script setup lang="ts">
-// Layout compartido — header y footer definitivos llegan en la Fase 2.
-const nav = [
-  { to: '/', label: 'Inicio' },
-  { to: '/sobre-mi', label: 'Sobre Mí' },
-  { to: '/proyectos', label: 'Proyectos' },
-  { to: '/blog', label: 'Blog' },
-  { to: '/contacto', label: 'Contacto' }
-]
-</script>
-
 <template>
-  <div>
-    <header>
-      <nav>
-        <NuxtLink v-for="item in nav" :key="item.to" :to="item.to">
-          {{ item.label }}
-        </NuxtLink>
-      </nav>
-    </header>
+  <div class="site">
+    <a href="#contenido" class="skip-link">Saltar al contenido</a>
 
-    <main>
+    <AppHeader />
+
+    <main id="contenido" class="site__main">
       <slot />
     </main>
 
-    <footer>
-      <p>Daniel González Picado — {{ new Date().getFullYear() }}</p>
-    </footer>
+    <AppFooter />
   </div>
 </template>
+
+<style scoped>
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.site__main {
+  flex: 1;
+}
+</style>
