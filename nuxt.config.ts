@@ -44,6 +44,14 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    /**
+     * Fijado a proposito. Nitro detecta el entorno de Netlify y cambia solo
+     * a `netlify-static`, que escribe en `dist/` en vez de `.output/public`:
+     * el build pasaba y el deploy fallaba con "publish directory does not
+     * exist". Declarandolo, local y CI generan la misma ruta.
+     */
+    preset: 'static',
+
     prerender: {
       crawlLinks: true,
       routes: ['/', '/404.html']
