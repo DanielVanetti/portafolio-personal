@@ -1,6 +1,7 @@
 <template>
   <div class="site">
     <ThePreloader />
+    <ScrollProgress />
 
     <a href="#contenido" class="skip-link">Saltar al contenido</a>
 

@@ -7,7 +7,7 @@ export const SITE = {
   name: 'Daniel González Picado',
   shortName: 'Daniel González',
   role: 'Desarrollador Full Stack',
-  tagline: 'Full Stack Developer — Costa Rica',
+  tagline: 'Full Stack Developer · IA — Costa Rica',
   email: 'danielgonzalezpicado@gmail.com',
   location: 'Liberia, Guanacaste, CR',
   coordinates: '10.63°N, 85.44°W'

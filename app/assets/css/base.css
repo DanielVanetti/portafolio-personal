@@ -215,6 +215,16 @@ a {
   transform: translateY(110%);
 }
 
+/* Reglas que se dibujan de izquierda a derecha al entrar en cuadro.
+   Solo scaleX: la línea ya ocupa su sitio, así que no hay reflow. */
+[data-draw] {
+  transform-origin: left center;
+}
+
+.js-motion [data-draw] {
+  transform: scaleX(0);
+}
+
 /* Máscara de línea: el interior sube desde abajo. El padding compensa
    los descendentes (g, y, j) que el overflow recortaría. */
 .reveal-line {
@@ -229,17 +239,44 @@ a {
   will-change: transform;
 }
 
-/* ---------- Transición de página ---------------------------- */
+/* ---------- Transición de página ----------------------------
+   Con mode: out-in la saliente termina antes de que entre la nueva, así
+   que el gesto se lee como un relevo y no como un cruce borroso.
+   La salida es más corta que la entrada: irse rápido, llegar con calma. */
 
-.page-enter-active,
 .page-leave-active {
-  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+  transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 }
 
-.page-enter-from,
+.page-enter-active {
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
 .page-leave-to {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(-12px);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ---------- Progreso de scroll ------------------------------
+   Hairline de café en el borde superior. Es decorativa: el estado real
+   de la página ya lo dan el scroll y la navegación. */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  width: 100%;
+  height: 2px;
+  background: var(--coffee);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
 }
 
 /* ---------- Accesibilidad de movimiento ---------------------

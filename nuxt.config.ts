@@ -30,7 +30,8 @@ export default defineNuxtConfig({
         }
       ]
     },
-    // Transicion entre rutas: fade sobrio, sin desplazamientos largos.
+    // Relevo entre rutas: la saliente se va rapido hacia arriba y la
+    // entrante llega desde abajo con mas calma. Los tiempos, en base.css.
     pageTransition: { name: 'page', mode: 'out-in' }
   },
 

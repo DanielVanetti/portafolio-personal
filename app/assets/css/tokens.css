@@ -70,6 +70,14 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 0.3s;
   --dur-base: 0.7s;
+
+  /* --- Campo del hero -----------------------------------------
+     Tintes muy diluidos sobre el papel: el fondo debe leerse como
+     luz cálida, no como color. Si estos alfas suben, el café deja
+     de ser un acento y pasa a ser superficie. */
+  --field-coffee: rgba(111, 78, 55, 0.26);
+  --field-sand: rgba(196, 158, 122, 0.30);
+  --field-ink: rgba(20, 19, 17, 0.05);
 }
 
 /* Secciones invertidas: se reasignan los alias y el acento pasa al

@@ -66,6 +66,63 @@ export function useReveal() {
         )
       })
 
+      // --- Campo del hero: tintes a la deriva ---
+      // Ciclos largos y primos entre sí para que los tres nunca vuelvan a
+      // coincidir: el fondo no debe tener un "loop" perceptible.
+      const field = document.querySelector<HTMLElement>('[data-field]')
+
+      if (field) {
+        const drifts = [
+          { x: 9, y: 7, scale: 1.12, duration: 29 },
+          { x: -11, y: -6, scale: 1.08, duration: 37 },
+          { x: 7, y: -9, scale: 0.9, duration: 43 }
+        ]
+
+        const tints = gsap.utils.toArray<HTMLElement>('[data-field-tint]', field)
+
+        const drift = tints.map((tint, i) => {
+          const step = drifts[i % drifts.length]!
+          return gsap.to(tint, {
+            xPercent: step.x,
+            yPercent: step.y,
+            scale: step.scale,
+            duration: step.duration,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true
+          })
+        })
+
+        // Fuera de pantalla el campo no se ve: dejarlo animando solo gastaría
+        // batería en el resto de la página.
+        ScrollTrigger.create({
+          trigger: field,
+          start: 'top bottom',
+          end: 'bottom top',
+          onToggle: ({ isActive }) => {
+            drift.forEach(tween => (isActive ? tween.play() : tween.pause()))
+          }
+        })
+      }
+
+      // --- Reglas que se dibujan al entrar en cuadro ---
+      gsap.utils.toArray<HTMLElement>('[data-draw]').forEach(line => {
+        gsap.fromTo(
+          line,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 1.1,
+            ease: 'power3.inOut',
+            scrollTrigger: {
+              trigger: line,
+              start: 'top 92%',
+              once: true
+            }
+          }
+        )
+      })
+
       // --- Parallax: nunca más del 10% que fija el presupuesto ---
       gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach(el => {
         gsap.to(el, {
