@@ -43,14 +43,9 @@ Nuxt 4 usa `app/` como directorio fuente, así que `pages/`, `layouts/` y
 
 ## Convenciones del proyecto
 
-Las reglas de diseño y de animación están escritas como skills en `.claude/`:
-
-- [`.claude/skills/design-system/SKILL.md`](.claude/skills/design-system/SKILL.md) —
-  paleta, tipografía, layout y accesibilidad.
-- [`.claude/skills/motion-rules/SKILL.md`](.claude/skills/motion-rules/SKILL.md) —
-  presupuesto de animación y reglas duras.
-
-Dos que conviene conocer antes de tocar el código:
+La paleta, la tipografía y la escala de espaciado viven como custom properties
+en `app/assets/css/tokens.css`; nada de color o tamaño se escribe a mano en los
+componentes. Dos reglas que conviene conocer antes de tocar el código:
 
 1. **El contenido debe verse sin JavaScript.** Los estados iniciales de las
    animaciones cuelgan de la clase `.js-motion`, que un script en línea del

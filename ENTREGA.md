@@ -8,9 +8,7 @@
 
 ## Sitio publicado
 
-> ⚠️ **Pendiente:** sustituir por la URL real después del deploy en Netlify.
-
-**URL:** `https://PENDIENTE.netlify.app`
+**URL:** <https://danielgonzalezportafolio.netlify.app/>
 
 Todas las rutas funcionan con acceso directo y con recarga (F5), porque el sitio
 se genera de forma estática y cada ruta tiene su propio `index.html`:
@@ -37,6 +35,10 @@ se genera de forma estática y cada ruta tiene su propio `index.html`:
 | 5 | `useHead` con título y meta descripción por página | Cada archivo de `app/pages/`; en `blog/[slug].vue` se derivan del post. Los 8 pares título/descripción generados son únicos |
 | 6 | Publicado en Netlify | Ver URL arriba. Configuración en `netlify.toml` |
 | 7 | Entrega sin `node_modules` | Ver "Cómo se empaquetó" |
+
+El paquete que se sube al AulaVirtual contiene únicamente el proyecto: no
+viajan las dependencias, los artefactos de build ni los documentos de trabajo
+interno (el plan y las guías de convenciones).
 
 ---
 
