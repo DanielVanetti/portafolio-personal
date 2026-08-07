@@ -1,60 +1,92 @@
-# Portafolio personal — Daniel González Picado
+# Portafolio personal — Tarea 1
 
-Sitio estático construido con Nuxt 4 para la Tarea 1 del curso Arquitectura de
-Información (Universidad Nacional). Dirección visual: **minimalista editorial
-con motion narrativo sutil**.
+**Estudiante:** Daniel González Picado
+**Curso:** Arquitectura de Información — Escuela de Informática, Universidad Nacional
+**Proyecto:** Sitio web personal estático construido con Nuxt 4
 
-Para los detalles de la entrega —URL publicada, cumplimiento de la rúbrica y
-resultados de Lighthouse— ver [`ENTREGA.md`](./ENTREGA.md).
+---
 
-## Puesta en marcha
+## Sitio publicado
 
-```bash
-npm install
-npm run dev        # http://localhost:3000
-```
+**URL:** <https://danielgonzalezportafolio.netlify.app/>
 
-## Comandos
+Todas las rutas funcionan con acceso directo y con recarga (F5), porque el sitio
+se genera de forma estática y cada ruta tiene su propio `index.html`:
 
-| Comando | Qué hace |
+| Ruta | Página |
 |---|---|
-| `npm run dev` | Servidor de desarrollo |
-| `npm run generate` | Genera el sitio estático en `.output/public` |
-| `npm run build` | Build de servidor (útil para comprobar que nada rompe el SSR) |
-| `npx serve .output/public` | Sirve la build estática en local |
+| `/` | Inicio |
+| `/sobre-mi` | Sobre Mí |
+| `/proyectos` | Proyectos |
+| `/blog` | Blog |
+| `/blog/<slug>` | Post individual (ruta dinámica) |
+| `/contacto` | Contacto |
 
-## Estructura
+---
+
+## Cumplimiento de los requisitos
+
+| # | Requisito | Dónde se comprueba |
+|---|---|---|
+| 1 | Proyecto creado con `nuxi init` | `package.json` (dependencia `nuxt`), estructura `app/` y `nuxt.config.ts` generados por la plantilla `minimal` |
+| 2 | Páginas Inicio, Sobre Mí, Proyectos, Contacto y Blog | `app/pages/` — más la ruta dinámica `app/pages/blog/[slug].vue` |
+| 3 | Navegación con `<NuxtLink>` | `app/components/AppHeader.vue` y `AppFooter.vue`. No existe ningún `<a href="/...">` interno en todo `app/` |
+| 4 | `layouts/default.vue` con header y footer compartidos | `app/layouts/default.vue` — se aplica a las 6 rutas |
+| 5 | `useHead` con título y meta descripción por página | Cada archivo de `app/pages/`; en `blog/[slug].vue` se derivan del post. Los 8 pares título/descripción generados son únicos |
+| 6 | Publicado en Netlify | Ver URL arriba. Configuración en `netlify.toml` |
+| 7 | Entrega sin librerías de Node | El paquete no incluye `node_modules` ni artefactos de build |
+
+---
+
+## Estructura del proyecto
 
 ```
 app/
 ├── app.vue              NuxtLayout + NuxtPage
-├── layouts/default.vue  Header y footer compartidos
+├── layouts/default.vue  Header y footer compartidos por todas las rutas
 ├── pages/               Las 5 páginas + blog/[slug].vue
 ├── components/          AppHeader, AppFooter, SectionLabel, MarqueeStrip,
 │                        ProjectRow, ProjectPlate, FeaturedProjects,
 │                        ThePreloader, ScrollProgress
-├── composables/         useReveal — reveals con GSAP y compuerta del preloader
+├── composables/         useReveal — animaciones de entrada con GSAP
 ├── plugins/             gsap.client.ts
 ├── data/                site.ts, projects.ts, posts.ts
 └── assets/css/          tokens.css, base.css
 ```
 
-Nuxt 4 usa `app/` como directorio fuente, así que `pages/`, `layouts/` y
-`components/` viven ahí y no en la raíz.
+---
 
-## Convenciones del proyecto
+## Decisiones técnicas
 
-La paleta, la tipografía y la escala de espaciado viven como custom properties
-en `app/assets/css/tokens.css`; nada de color o tamaño se escribe a mano en los
-componentes. Dos reglas que conviene conocer antes de tocar el código:
+- **Nuxt 4 y la carpeta `app/`.** `nuxi init` genera hoy Nuxt 4, cuyo directorio
+  fuente por defecto es `app/`. Por eso `layouts/`, `pages/` y `components/`
+  viven dentro de `app/` en lugar de en la raíz. El requisito de tener un
+  `layouts/default.vue` compartido se cumple igual.
+- **Rutas automáticas.** No hay ningún archivo de rutas: cada `.vue` dentro de
+  `app/pages/` se convierte en una ruta por su nombre. `blog/[slug].vue`
+  demuestra el enrutamiento dinámico.
+- **Sin backend.** El blog lee de `app/data/posts.ts` y los proyectos de
+  `app/data/projects.ts`, así que el sitio es 100 % estático.
+- **El sitio funciona sin JavaScript.** Las animaciones se apoyan en una clase
+  que un script en línea añade al `<html>` solo si hay JS y el usuario no ha
+  pedido menos movimiento. Sin esa clase, nada se oculta y todo el contenido
+  es legible.
+- **`prefers-reduced-motion` respetado.** Con esa preferencia activa no se
+  ejecuta el preloader ni ninguna animación de entrada, y el marquee se detiene.
 
-1. **El contenido debe verse sin JavaScript.** Los estados iniciales de las
-   animaciones cuelgan de la clase `.js-motion`, que un script en línea del
-   `<head>` solo añade si hay JS y el usuario no pidió `prefers-reduced-motion`.
-2. **Solo se anima `transform` y `opacity`.** Nada que provoque layout.
+---
 
-## Nota sobre npm
+## Resultados de Lighthouse
 
-El `.npmrc` fija `legacy-peer-deps=true` para esquivar un bug de npm 10.9 (el que
-trae Node 22.12) al resolver las dependencias de pares de Vite. Con npm 11 o
-superior puede eliminarse.
+Medidos sobre la build estática (`--preset=desktop`):
+
+| Ruta | Performance | Accesibilidad | Buenas prácticas | SEO |
+|---|---|---|---|---|
+| `/` | 100 | 100 | 100 | 100 |
+| `/sobre-mi` | 100 | 100 | 100 | 100 |
+| `/proyectos` | 100 | 100 | 100 | 100 |
+| `/contacto` | 100 | 100 | 100 | 100 |
+| `/blog` | 100 | 100 | 100 | 100 |
+| `/blog/<slug>` | 99 | 100 | 100 | 100 |
+
+CLS de 0 en las seis rutas.
