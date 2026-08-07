@@ -105,4 +105,5 @@ powershell -ExecutionPolicy Bypass -File scripts/empaquetar.ps1
 ```
 
 El script genera `entrega.zip` excluyendo `node_modules`, `.output`, `.nuxt`,
-`.git` y las cachés de build.
+`.git` y las cachés de build, más los documentos de trabajo interno (`.claude/`
+y el plan). Al terminar vuelve a abrir el zip y falla si algo de eso se coló.

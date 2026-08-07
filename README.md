@@ -31,7 +31,8 @@ app/
 ├── layouts/default.vue  Header y footer compartidos
 ├── pages/               Las 5 páginas + blog/[slug].vue
 ├── components/          AppHeader, AppFooter, SectionLabel, MarqueeStrip,
-│                        ProjectRow, ProjectPlate, FeaturedProjects, ThePreloader
+│                        ProjectRow, ProjectPlate, FeaturedProjects,
+│                        ThePreloader, ScrollProgress
 ├── composables/         useReveal — reveals con GSAP y compuerta del preloader
 ├── plugins/             gsap.client.ts
 ├── data/                site.ts, projects.ts, posts.ts
