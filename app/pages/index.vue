@@ -85,7 +85,7 @@ useReveal()
       </div>
     </section>
 
-    <!-- ( SKILLS ) — franja invertida, el golpe de contraste del sitio -->
+    <!-- ( SKILLS ) — franja invertida, el golpe de contraste del sitio. -->
     <section class="invert skills">
       <div class="wrap">
         <SectionLabel index="02" text="Herramientas" />

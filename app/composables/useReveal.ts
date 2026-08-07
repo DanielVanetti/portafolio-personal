@@ -58,11 +58,18 @@ export function useReveal() {
 
     ctx = gsap.context(() => {
       // --- Hero: las líneas ya vienen partidas en el marcado ---
+      //
+      // El `y: 0` no sobra. El estado inicial vive en CSS como
+      // `translateY(110%)`, y getComputedStyle devuelve esa matriz ya
+      // resuelta a píxeles. GSAP no puede saber que era un porcentaje, así
+      // que la guarda como `y: 149.98px` y anima `yPercent` *encima*: al
+      // terminar, la línea queda un alto por debajo de su caja y la máscara
+      // se la come entera. Fijar `y` explícitamente descarta ese residuo.
       gsap.utils.toArray<HTMLElement>('[data-reveal="hero"]').forEach(hero => {
         gsap.fromTo(
           hero.querySelectorAll('[data-reveal-line]'),
-          { yPercent: 110 },
-          { yPercent: 0, duration: 1, ease: 'power4.out', stagger: 0.08 }
+          { yPercent: 110, y: 0 },
+          { yPercent: 0, y: 0, duration: 1, ease: 'power4.out', stagger: 0.08 }
         )
       })
 

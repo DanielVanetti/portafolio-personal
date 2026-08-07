@@ -26,6 +26,9 @@ Esta tabla es el límite completo. **Nada fuera de esta lista.**
 | Subrayado café | Links de nav | Línea que se dibuja de izquierda a derecha, 0.3s |
 | Transición de página | Entre rutas | `pageTransition` de Nuxt: fade + leve `y`, 0.4s |
 | Parallax sutil | Plates del hero | **Máximo 8–10%** de desplazamiento |
+| Campo del hero | Solo Inicio | Tres tintes radiales a la deriva, ciclos de 29/37/43s (no múltiplos entre sí: el loop no debe percibirse). Se pausan al salir de pantalla |
+| Reglas que se dibujan | `hr` de sección | `scaleX` 0→1, 1.1s, `power3.inOut`, una vez |
+| Progreso de scroll | Global | Hairline de café, `scaleX` atado al scroll. Decorativa: sin rol ARIA |
 
 ## Reglas duras
 
