@@ -60,7 +60,6 @@ useReveal()
         <div class="col-7-12 detail" data-reveal="up">
           <SectionLabel text="Dónde Estoy" />
           <p class="detail__place">{{ SITE.location }}</p>
-          <p class="mono-meta muted">{{ SITE.coordinates }}</p>
           <p class="detail__note muted">
             Trabajo de forma remota o híbrida. Respondo correos entre semana,
             normalmente el mismo día.

@@ -44,8 +44,12 @@ const nav = [
       <hr class="rule">
 
       <div class="site-footer__bottom">
-        <p class="mono-meta muted">{{ SITE.coordinates }} — {{ SITE.location }}</p>
-        <p class="mono-meta muted">© {{ year }} · Hecho con Nuxt</p>
+        <p class="mono-meta muted">
+          Diseñado y desarrollado por {{ SITE.author }}
+        </p>
+        <p class="mono-meta muted">
+          © {{ year }} {{ SITE.author }} · Todos los derechos reservados
+        </p>
       </div>
     </div>
   </footer>

@@ -6,11 +6,13 @@
 export const SITE = {
   name: 'Daniel González Picado',
   shortName: 'Daniel González',
+  /* Firma de autoría del pie. Va aparte del nombre legal porque es el
+     alias con el que Daniel publica su trabajo. */
+  author: 'Daniel Vanetti',
   role: 'Desarrollador Full Stack',
   tagline: 'Full Stack Developer · IA — Costa Rica',
   email: 'danielgonzalezpicado@gmail.com',
-  location: 'Liberia, Guanacaste, CR',
-  coordinates: '10.63°N, 85.44°W'
+  location: 'Liberia, Guanacaste, CR'
 } as const
 
 export const SOCIALS = [
