@@ -20,7 +20,7 @@ withDefaults(
     <div class="marquee__track">
       <ul v-for="group in 2" :key="group" class="marquee__group" role="list" :aria-hidden="group === 2 ? 'true' : undefined">
         <li v-for="item in items" :key="item" class="marquee__item">
-          {{ item }}
+          <span class="marquee__word">{{ item }}</span>
           <span class="marquee__sep" aria-hidden="true">{{ separator }}</span>
         </li>
       </ul>
@@ -44,7 +44,9 @@ withDefaults(
   width: max-content;
   /* -50% = exactamente un grupo. Como los dos son idénticos, el salto
      al reiniciar es invisible. */
-  animation: marquee-scroll 45s linear infinite;
+  /* Más lento que antes: el texto ahora es 4 veces más grande y a la
+     misma duración se leería como una cinta nerviosa. */
+  animation: marquee-scroll 90s linear infinite;
   will-change: transform;
 }
 
@@ -80,10 +82,18 @@ withDefaults(
   gap: var(--sp-4);
   white-space: nowrap;
   font-family: var(--font-display);
-  font-size: var(--fs-h3);
+  font-size: var(--fs-display);
   font-weight: 300;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   color: var(--text);
+}
+
+/* Alternancia sólido / contorno: ritmo sin sumar color ni peso visual.
+   Decorativo: el texto sigue siendo legible para lectores de pantalla. */
+.marquee__item:nth-child(even) .marquee__word {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text);
 }
 
 .marquee__sep {

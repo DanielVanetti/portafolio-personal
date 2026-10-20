@@ -39,19 +39,22 @@ useReveal()
       <div class="wrap hero__inner" data-parallax>
         <SectionLabel :text="SITE.tagline" />
 
-        <h1 class="hero__name" data-reveal="hero">
-          <span class="reveal-line">
-            <span class="reveal-line__inner" data-reveal-line>Daniel</span>
-          </span>
-          <span class="reveal-line">
-            <span class="reveal-line__inner" data-reveal-line>González</span>
-          </span>
-        </h1>
+        <!-- El nombre sigue siendo el h1, pero solo para lectores de pantalla
+             y buscadores: lo que se ve es la inicial, que se rompe bajo el
+             cursor (ver ShatterLetter). -->
+        <h1 class="sr-only">{{ SITE.name }}</h1>
 
-        <p class="hero__statement lead" data-reveal="up">
-          Sistemas a medida e integraciones de IA para los procesos que una
-          empresa usa todos los días.
-        </p>
+        <div class="hero__stage">
+          <div class="hero__letter" data-reveal="up">
+            <ShatterLetter letter="D" />
+            <p class="hero__hint mono-meta muted" aria-hidden="true">( Probá romper la D )</p>
+          </div>
+
+          <p class="hero__statement lead" data-reveal="up">
+            Sistemas a medida e integraciones de IA para los procesos que una
+            empresa usa todos los días.
+          </p>
+        </div>
 
         <div class="hero__meta">
           <span class="mono-meta muted">↓ Scroll</span>
@@ -63,15 +66,16 @@ useReveal()
     <!-- ( 01 — SOBRE MÍ ) -->
     <section class="section">
       <div class="wrap grid">
-        <div class="col-1-6">
+        <div class="col-full">
           <SectionLabel index="01" text="Sobre Mí" />
         </div>
 
-        <div class="col-7-12 stack" data-reveal="up">
-          <p class="lead">
-            Soy ingeniero en Sistemas de Información y estudio la Licenciatura en
-            Desarrollo Web en la Universidad Nacional.
-          </p>
+        <p class="col-2-12 about__lead" data-reveal="up">
+          Soy ingeniero en Sistemas de Información y estudio la Licenciatura en
+          Desarrollo Web en la Universidad Nacional.
+        </p>
+
+        <div class="col-7-12 stack about__body" data-reveal="up">
           <p>
             Trabajo en la parte del oficio que rara vez sale en las demos:
             sistemas que ya están en producción, datos que no pueden perderse y
@@ -120,7 +124,7 @@ useReveal()
         <hr class="rule" data-draw>
         <p class="closing__text" data-reveal="up">
           Estoy abierto a proyectos y a posiciones donde haya algo que
-          <NuxtLink to="/contacto" class="link-underline">construir en serio</NuxtLink>.
+          <NuxtLink to="/contacto" class="closing__link link-underline">construir en serio.</NuxtLink>
         </p>
       </div>
     </section>
@@ -218,21 +222,53 @@ useReveal()
   mix-blend-mode: multiply;
 }
 
-.hero__name {
-  display: flex;
-  flex-direction: column;
-  margin-block: auto;
-  font-size: var(--fs-hero);
+.hero__stage {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+  align-items: end;
+  margin-block: auto var(--sp-8);
+}
+
+/* La inicial, a escala de fachada. El tope por altura (svh) evita que en
+   pantallas anchas pero bajas se salga del primer pantallazo. */
+.hero__letter {
+  font-family: var(--font-display);
+  font-size: clamp(15rem, min(46vw, 62svh), 38rem);
   font-weight: 300;
-  line-height: var(--lh-tight);
-  letter-spacing: -0.045em;
+  line-height: 1;
+  /* La caja del glifo es más alta que la D; se recorta el aire sobrante. */
+  margin-block: -0.14em -0.08em;
+  letter-spacing: -0.02em;
+}
+
+.hero__hint {
+  margin-top: var(--sp-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  line-height: 1;
+  letter-spacing: var(--ls-label);
 }
 
 .hero__statement {
-  align-self: flex-end;
+  justify-self: end;
   max-width: 22ch;
-  margin-bottom: var(--sp-8);
   text-align: right;
+}
+
+@media (min-width: 900px) {
+  .hero__stage {
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--grid-gap);
+  }
+
+  .hero__letter {
+    grid-column: 1 / 8;
+  }
+
+  .hero__statement {
+    grid-column: 8 / 13;
+  }
 }
 
 .hero__meta {
@@ -280,14 +316,42 @@ useReveal()
   padding-bottom: var(--sp-16);
 }
 
-.closing__text {
-  max-width: 24ch;
+/* Entradilla monumental: el texto de Sobre Mí es el primer golpe de
+   escala tras el hero. */
+.about__lead {
+  max-width: 22ch;
   margin-top: var(--sp-6);
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 300;
   line-height: var(--lh-snug);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.about__body {
+  padding-top: var(--sp-2);
+}
+
+.closing__text {
+  max-width: 18ch;
+  margin-top: var(--sp-8);
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+/* El detalle de café de la sección: la acción final, siempre subrayada. */
+.closing__link {
+  color: var(--coffee);
+}
+
+.closing__link::after {
+  height: 2px;
+  transform: scaleX(1);
 }
 
 @media (min-width: 700px) {

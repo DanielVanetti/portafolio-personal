@@ -48,8 +48,26 @@ defineProps<{
 .row__title {
   font-size: var(--fs-h2);
   font-weight: 300;
-  line-height: var(--lh-snug);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.035em;
   transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* El índice es parte del gesto tipográfico: serif, grande, en café. */
+.row__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.row {
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.row:hover {
+  border-top-color: var(--ink);
 }
 
 .row:hover .row__title {
@@ -63,6 +81,12 @@ defineProps<{
       'index title   context'
       '.     stack   stack';
     column-gap: var(--sp-6);
+    row-gap: var(--sp-2);
+    padding-block: var(--sp-6);
+  }
+
+  .row__title {
+    font-size: clamp(3.5rem, 6.5vw, 6rem);
   }
 
   .row__context {

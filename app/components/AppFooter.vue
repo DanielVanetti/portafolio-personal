@@ -6,7 +6,7 @@ const year = new Date().getFullYear()
 const nav = [
   { to: '/sobre-mi', label: 'Sobre Mí' },
   { to: '/proyectos', label: 'Proyectos' },
-  { to: '/blog', label: 'Blog' },
+  { to: '/detalles', label: 'Detalles' },
   { to: '/contacto', label: 'Contacto' }
 ]
 </script>
@@ -41,6 +41,9 @@ const nav = [
         </nav>
       </div>
 
+      <!-- Wordmark decorativo: el nombre a escala de fachada. -->
+      <p class="site-footer__mark" aria-hidden="true">Daniel González</p>
+
       <hr class="rule">
 
       <div class="site-footer__bottom">
@@ -62,6 +65,20 @@ const nav = [
 
 .site-footer__top {
   margin-bottom: var(--sp-12);
+}
+
+.site-footer__mark {
+  max-width: none;
+  margin-bottom: var(--sp-4);
+  font-family: var(--font-display);
+  /* Calibrado para que "Daniel González" quepa en una sola línea. */
+  font-size: clamp(2.75rem, 13.2vw, 12.4rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  color: var(--rule);
+  user-select: none;
 }
 
 .site-footer__email {
@@ -104,6 +121,13 @@ const nav = [
   justify-content: space-between;
   gap: var(--sp-1);
   padding-top: var(--sp-3);
+}
+
+/* En móvil el correo, a 1.75rem, no cabe y se partía a mitad de palabra. */
+@media (max-width: 599px) {
+  .site-footer__email {
+    font-size: var(--fs-body);
+  }
 }
 
 @media (min-width: 900px) {

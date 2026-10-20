@@ -5,13 +5,13 @@ const nav = [
   { to: '/', label: 'Inicio' },
   { to: '/sobre-mi', label: 'Sobre Mí' },
   { to: '/proyectos', label: 'Proyectos' },
-  { to: '/blog', label: 'Blog' },
+  { to: '/detalles', label: 'Detalles' },
   { to: '/contacto', label: 'Contacto' }
 ]
 
 /**
  * Inicio solo está activo en la raíz exacta; el resto de secciones
- * siguen activas dentro de sus rutas hijas (p. ej. /blog/mi-post).
+ * siguen activas dentro de sus rutas hijas.
  */
 const isActive = (to: string) =>
   to === '/' ? route.path === '/' : route.path.startsWith(to)
@@ -66,10 +66,14 @@ const isActive = (to: string) =>
   text-transform: uppercase;
 }
 
+/* "Detalles" es más largo que el "Blog" al que sustituyó: en móvil los cinco
+   enlaces no caben con la separación de escritorio, así que se estrechan
+   y, como último recurso, bajan de línea en vez de ensanchar la página. */
 .nav__list {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--sp-2);
+  gap: 0 var(--sp-1);
   margin: 0;
   padding: 0;
 }
@@ -81,7 +85,7 @@ const isActive = (to: string) =>
   padding-block: 0.85rem;
   font-size: var(--fs-label);
   font-weight: 500;
-  letter-spacing: var(--ls-label);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--gray-600);
   transition: color var(--dur-fast) var(--ease-out);
@@ -102,7 +106,11 @@ const isActive = (to: string) =>
 
   .nav__list {
     justify-content: flex-end;
-    gap: var(--sp-4);
+    gap: 0 var(--sp-4);
+  }
+
+  .nav__link {
+    letter-spacing: var(--ls-label);
   }
 }
 </style>

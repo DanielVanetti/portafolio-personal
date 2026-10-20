@@ -1,3 +1,5 @@
+import { MOTION_LESSONS } from './app/data/lessons'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -54,7 +56,9 @@ export default defineNuxtConfig({
 
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/404.html']
+      // Las páginas de cada principio también salen de los enlaces de las
+      // tarjetas; listarlas aquí garantiza que ninguna se quede sin generar.
+      routes: ['/', '/404.html', ...MOTION_LESSONS.map(lesson => `/detalles/${lesson.slug}`)]
     }
   }
 })

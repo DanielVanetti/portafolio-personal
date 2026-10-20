@@ -22,7 +22,7 @@ useReveal()
         <div class="col-1-6">
           <SectionLabel index="01" text="Proyectos" />
         </div>
-        <h1 class="col-1-8 page-head__title" data-reveal="lines">
+        <h1 class="col-full page-head__title" data-reveal="lines">
           Cinco proyectos, contados por el problema que resolvían.
         </h1>
         <p class="col-1-6 page-head__note muted">
@@ -76,7 +76,7 @@ useReveal()
         <hr class="rule">
         <p class="closing__text" data-reveal="up">
           ¿Algo de esto se parece a lo que necesitás?
-          <NuxtLink to="/contacto" class="link-underline">Escribime</NuxtLink>.
+          <NuxtLink to="/contacto" class="closing__link link-underline">Escribime.</NuxtLink>
         </p>
       </div>
     </section>
@@ -84,18 +84,12 @@ useReveal()
 </template>
 
 <style scoped>
-.page-head {
-  padding-bottom: 0;
-}
-
-.page-head__title {
-  margin-top: var(--sp-4);
-  font-size: var(--fs-h1);
-  letter-spacing: -0.03em;
-}
-
 .page-head__note {
   margin-top: var(--sp-4);
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  font-weight: 300;
+  letter-spacing: -0.02em;
 }
 
 .project {
@@ -117,6 +111,8 @@ useReveal()
 .project__title {
   font-size: var(--fs-h2);
   font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.035em;
 }
 
 .project__detail {
@@ -162,19 +158,5 @@ useReveal()
     grid-column: 1 / 6;
     grid-row: 1;
   }
-}
-
-.closing {
-  padding-bottom: var(--sp-16);
-}
-
-.closing__text {
-  max-width: 26ch;
-  margin-top: var(--sp-6);
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  font-weight: 300;
-  line-height: var(--lh-snug);
-  letter-spacing: -0.02em;
 }
 </style>

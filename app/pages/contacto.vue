@@ -22,7 +22,7 @@ useReveal()
         <div class="col-1-6">
           <SectionLabel index="01" text="Contacto" />
         </div>
-        <h1 class="col-1-8 page-head__title" data-reveal="lines">
+        <h1 class="col-full page-head__title" data-reveal="lines">
           La forma corta: escribime un correo.
         </h1>
       </div>
@@ -71,21 +71,11 @@ useReveal()
 </template>
 
 <style scoped>
-.page-head {
-  padding-bottom: 0;
-}
-
-.page-head__title {
-  margin-top: var(--sp-4);
-  font-size: var(--fs-h1);
-  letter-spacing: -0.03em;
-}
-
 .email {
   display: block;
-  padding-block: var(--sp-6);
+  padding-block: var(--sp-8);
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 8vw, 4.5rem);
+  font-size: clamp(1.75rem, 6.2vw, 6.5rem);
   font-weight: 300;
   line-height: var(--lh-snug);
   letter-spacing: -0.03em;

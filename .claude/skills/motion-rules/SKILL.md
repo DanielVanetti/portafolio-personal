@@ -29,6 +29,8 @@ Esta tabla es el límite completo. **Nada fuera de esta lista.**
 | Campo del hero | Solo Inicio | Tres tintes radiales a la deriva, ciclos de 29/37/43s (no múltiplos entre sí: el loop no debe percibirse). Se pausan al salir de pantalla |
 | Reglas que se dibujan | `hr` de sección | `scaleX` 0→1, 1.1s, `power3.inOut`, una vez |
 | Progreso de scroll | Global | Hairline de café, `scaleX` atado al scroll. Decorativa: sin rol ARIA |
+| Inicial que se rompe | Hero de Inicio | `ShatterLetter`: la "D" se parte en fragmentos que se apartan del cursor con un resorte amortiguado y se recomponen al salir. Solo `transform`; con reduced-motion no se activa; el nombre real vive en un `h1` `.sr-only` |
+| Demos de motion | `/detalles` | `MotionTile`: 12 demos monocromas (hover, foco o toque). Son contenido educativo, no decoración: pueden usar propiedades fuera de `transform`/`opacity` **solo dentro del escenario de la demo**, nunca en el layout de la página |
 
 ## Reglas duras
 

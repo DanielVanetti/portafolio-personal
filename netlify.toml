@@ -6,6 +6,18 @@
   # Nuxt 4.5 exige node ^22.19 || ^24.11 || >=26.
   NODE_VERSION = "22.19.0"
 
+# El blog se retiro y se sustituyo por /detalles: que los enlaces antiguos
+# no terminen en un 404.
+[[redirects]]
+  from = "/blog"
+  to = "/detalles"
+  status = 301
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/detalles"
+  status = 301
+
 # Sitio 100% estatico: cada ruta se prerenderiza a su propio index.html,
 # asi que el acceso directo y el refresh funcionan sin redirects.
 [[headers]]
