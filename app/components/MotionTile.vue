@@ -87,7 +87,6 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
       type="button"
       class="stage"
       :aria-pressed="pinned"
-      :aria-label="`Reproducir la demo de ${lesson.name}`"
       @pointerenter="onEnter"
       @pointerleave="onLeave"
       @pointermove="onMove"
@@ -208,12 +207,16 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
         </template>
       </span>
 
-      <span class="stage__hint mono-meta">{{ playing ? '● En marcha' : '○ Probar' }}</span>
+      <!-- El nombre accesible sale de este texto oculto; la pista visible
+           cambia con el estado y por eso queda fuera del árbol. -->
+      <span class="sr-only">Probar la demo de {{ lesson.name }}</span>
+      <span class="stage__hint mono-meta" aria-hidden="true">{{ playing ? '● En marcha' : '○ Probar' }}</span>
     </button>
 
     <div v-if="variant === 'card'" class="body">
       <span class="body__index" aria-hidden="true">{{ index }}</span>
-      <h3 class="body__name">{{ lesson.name }}</h3>
+      <!-- h2: en /detalles son el primer nivel bajo el h1 de la página. -->
+      <h2 class="body__name">{{ lesson.name }}</h2>
       <p class="body__text">{{ lesson.text }}</p>
       <p class="body__use mono-meta muted">
         <span class="label__index">Uso —</span> {{ lesson.use }}
@@ -264,10 +267,15 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
   place-items: center;
 }
 
+/* Va encima de la escena y con fondo propio: algunas demos (Dolly & Zoom)
+   crecen hasta las esquinas y sin esto le pasarían por encima al texto. */
 .stage__hint {
   position: absolute;
-  left: var(--sp-2);
-  bottom: var(--sp-2);
+  left: calc(var(--sp-2) - 0.5rem);
+  bottom: calc(var(--sp-2) - 0.25rem);
+  z-index: 1;
+  padding: 0.25rem 0.5rem;
+  background: var(--bg-dark);
   color: #9C948A;
 }
 

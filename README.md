@@ -89,16 +89,24 @@ app/
 
 ## Resultados de Lighthouse
 
-Medidos sobre la build estática (`--preset=desktop`):
+Medidos con Lighthouse 12 sobre la build estática (`npm run generate`),
+después del rediseño, la inicial interactiva y la página `/detalles`.
+
+**Escritorio** (preset desktop):
 
 | Ruta | Performance | Accesibilidad | Buenas prácticas | SEO |
 |---|---|---|---|---|
-| `/` | 100 | 100 | 100 | 100 |
+| `/` | 99 | 100 | 100 | 100 |
 | `/sobre-mi` | 100 | 100 | 100 | 100 |
-| `/proyectos` | 100 | 100 | 100 | 100 |
+| `/proyectos` | 99 | 100 | 100 | 100 |
+| `/detalles` | 100 | 100 | 100 | 100 |
+| `/detalles/<slug>` | 99 | 100 | 100 | 100 |
 | `/contacto` | 100 | 100 | 100 | 100 |
-| `/detalles` y `/detalles/<slug>` | sin medir | sin medir | sin medir | sin medir |
 
-Las cifras de arriba son anteriores al rediseño tipográfico, a la inicial
-interactiva del hero y a la página `/detalles`: conviene volver a medirlas
-antes de una nueva entrega.
+CLS de 0 (0,001 en `/contacto`) y TBT de 0 ms en todas las rutas.
+
+**Móvil** (emulación por defecto: 4G lento y CPU ×4): Performance entre 86 y
+96, con accesibilidad, buenas prácticas y SEO en 100. El LCP ronda los 3 s,
+pero ya estaba así antes del rediseño: en una comparación contra la versión
+anterior (mediana de 3 pasadas) Inicio da 87 frente a 89, Sobre Mí 93 frente
+a 89 y Contacto 96 en ambas.

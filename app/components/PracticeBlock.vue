@@ -16,7 +16,7 @@ defineProps<{
   <article class="practice grid">
     <div class="practice__copy">
       <span class="practice__index" aria-hidden="true">{{ index }}</span>
-      <h3 class="practice__title">{{ title }}</h3>
+      <h2 class="practice__title">{{ title }}</h2>
       <p class="practice__text muted">{{ text }}</p>
       <p class="practice__rule mono-meta">
         <span class="label__index">Regla —</span> {{ rule }}

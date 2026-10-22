@@ -77,7 +77,9 @@ const nav = [
   line-height: 0.9;
   letter-spacing: -0.05em;
   white-space: nowrap;
-  color: var(--rule);
+  /* Tenue pero legible: 3:1 sobre --bg-dark, el mínimo para texto grande.
+     Con --rule (1,3:1) Lighthouse lo marcaba en todas las páginas. */
+  color: #67615A;
   user-select: none;
 }
 

@@ -94,7 +94,7 @@ const DETAILS: Record<LessonKind, LessonDetail> = {
     tip: 'Que cambie la forma, no el significado: el elemento debe seguir siendo reconocible durante todo el trayecto.'
   },
   value: {
-    why: 'Un número que salta de golpe se lee como un error. Verlo cambiar permite entender de dónde vino la diferencia, y eso genera confianza en el resultado.',
+    why: 'Un número que salta de golpe puede pasar desapercibido o leerse como un error. Verlo cambiar permite entender de dónde vino la diferencia, y eso genera confianza en el resultado.',
     when: [
       'Totales que cambian al añadir productos.',
       'Métricas y contadores de progreso.',
@@ -104,7 +104,7 @@ const DETAILS: Record<LessonKind, LessonDetail> = {
     tip: 'Usá dígitos tabulares (font-variant-numeric: tabular-nums) para que el ancho del número no se mueva mientras cuenta.'
   },
   masking: {
-    why: 'Una máscara descubre el contenido sin desplazarlo: el elemento ya está en su lugar y solo se revela. Se siente más preciso, y es más barato de animar que mover cajas por la pantalla.',
+    why: 'Una máscara descubre el contenido sin desplazarlo: el elemento ya está en su lugar y solo se revela. Como nada cambia de sitio, se siente más preciso que mover cajas por la pantalla.',
     when: [
       'Titulares que suben desde una línea.',
       'Imágenes que se descubren al hacer scroll.',
@@ -234,7 +234,7 @@ const RAW_LESSONS: readonly RawLesson[] = [
     kind: 'parallax',
     name: 'Parallax',
     text: 'Capas que se mueven a distinta velocidad crean profundidad con solo mover el cursor o hacer scroll. Siempre sutil.',
-    use: 'Héroes y fondos de sección, con desplazamientos de un 8–10% como máximo.'
+    use: 'Héroes y fondos de sección, con desplazamientos de un 8–10 % como máximo.'
   },
   {
     kind: 'dimensionality',
@@ -271,7 +271,7 @@ export const PRACTICES: readonly Practice[] = [
     index: '01',
     title: 'Áreas táctiles de 44 píxeles',
     text: 'Un botón pequeño no es un problema de diseño: es un problema de dedos. El ícono puede ser chico, pero la zona que responde al toque no.',
-    rule: 'Mínimo 44 × 44 px de zona pulsable, con espacio entre objetivos vecinos.'
+    rule: 'WCAG exige al menos 24 × 24 px; 44 × 44 px es lo cómodo para un dedo.'
   },
   {
     index: '02',

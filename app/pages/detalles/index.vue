@@ -66,7 +66,9 @@ const luminance = (r: number, g: number, b: number) =>
 // Luminancia del fondo del panel (--bg: #FAF9F6).
 const BG_LUMINANCE = luminance(250, 249, 246)
 
-const level = ref(30)
+// Arranca aprobando (≈5:1): la página no debe fallar su propia regla. Al
+// bajar el control se ve el momento exacto en que deja de leerse.
+const level = ref(55)
 const grey = computed(() => Math.round(214 - (214 - 20) * (level.value / 100)))
 const ratio = computed(() => {
   const l = luminance(grey.value, grey.value, grey.value)
@@ -191,7 +193,7 @@ const restoreDocs = () => {
 
           <div class="taps">
             <div class="taps__col">
-              <p class="mono-meta muted">20 px — difícil</p>
+              <p class="mono-meta muted">24 px — el mínimo</p>
               <div class="taps__row">
                 <button
                   v-for="n in 4"
@@ -279,6 +281,8 @@ const restoreDocs = () => {
             Entregamos el viernes. Si algo no queda claro en esta frase, el
             problema es del contraste y no de tu vista.
           </p>
+
+          <p class="mono-meta muted">Mové el control hacia la izquierda y mirá cuándo deja de leerse.</p>
 
           <p class="verdict" :class="passes ? 'is-pass' : 'is-fail'" role="status">
             <span class="verdict__ratio">{{ ratioText }}</span>
@@ -514,10 +518,11 @@ const restoreDocs = () => {
   transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 
-/* Los dos tamaños son a propósito: el pequeño es la demostración. */
+/* Los dos tamaños son a propósito: el pequeño es el mínimo de WCAG 2.2
+   (24 px), que se puede usar pero cuesta; 44 px es lo cómodo. */
 .tap--small {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .tap--large {
