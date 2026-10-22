@@ -3,21 +3,22 @@ import { gsap } from 'gsap'
 import type { Lesson } from '~/data/lessons'
 
 /**
- * Tarjeta de un principio de motion: un escenario oscuro con una demo
- * monocroma y, debajo, la explicación.
+ * Tarjeta de un principio de motion: un escenario claro con una demo en
+ * tinta y café y, debajo, la explicación.
  *
  * La demo se reproduce al pasar el cursor, al enfocar con teclado o al
  * tocar/pulsar (que la fija hasta el siguiente toque). El texto está siempre
  * visible: la demo es un refuerzo, no la única fuente de información.
  */
+const { t, path } = useLocale()
+
 const props = withDefaults(
   defineProps<{
     lesson: Lesson
-    index?: string
     // 'stage' deja solo el escenario, para la página del principio.
     variant?: 'card' | 'stage'
   }>(),
-  { index: '', variant: 'card' }
+  { variant: 'card' }
 )
 
 const stageRef = ref<HTMLElement | null>(null)
@@ -209,20 +210,23 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
 
       <!-- El nombre accesible sale de este texto oculto; la pista visible
            cambia con el estado y por eso queda fuera del árbol. -->
-      <span class="sr-only">Probar la demo de {{ lesson.name }}</span>
-      <span class="stage__hint mono-meta" aria-hidden="true">{{ playing ? '● En marcha' : '○ Probar' }}</span>
+      <span class="sr-only">{{ t.details.demo(lesson.name) }}</span>
+      <!-- Indicador de estado: reproducir / en marcha. Solo forma, sin texto. -->
+      <span class="stage__play" aria-hidden="true">
+        <svg v-if="!playing" viewBox="0 0 16 16"><path d="M5.5 3.8v8.4L12 8z" fill="currentColor" /></svg>
+        <svg v-else viewBox="0 0 16 16"><path d="M5 4h2v8H5zM9 4h2v8H9z" fill="currentColor" /></svg>
+      </span>
     </button>
 
     <div v-if="variant === 'card'" class="body">
-      <span class="body__index" aria-hidden="true">{{ index }}</span>
-      <!-- h2: en /detalles son el primer nivel bajo el h1 de la página. -->
+      <!-- h2: en Detalles son el primer nivel bajo el h1 de la página. -->
       <h2 class="body__name">{{ lesson.name }}</h2>
-      <p class="body__text">{{ lesson.text }}</p>
-      <p class="body__use mono-meta muted">
-        <span class="label__index">Uso —</span> {{ lesson.use }}
-      </p>
-      <NuxtLink :to="`/detalles/${lesson.slug}`" class="body__more link-underline">
-        Ver a detalle<span class="sr-only">: {{ lesson.name }}</span>
+      <p class="body__text muted">{{ lesson.text }}</p>
+      <NuxtLink :to="path('details', lesson.slug)" class="body__more">
+        {{ t.details.more }}<span class="sr-only">: {{ lesson.name }}</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
       </NuxtLink>
     </div>
   </article>
@@ -230,10 +234,11 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
 
 <style scoped>
 .tile {
-  --fg: var(--ink-dark);
-  --ac: var(--coffee-soft);
-  --dim: #57534E;
-  --line: #2E2B28;
+  --fg: var(--ink);
+  --ac: var(--coffee);
+  --dim: #A8A29A;
+  --line: var(--gray-300);
+  --paper: #FFFFFF;
   --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
 
   display: flex;
@@ -250,9 +255,11 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
   aspect-ratio: 4 / 3;
   padding: 0;
   overflow: hidden;
-  border: 0;
-  background: var(--bg-dark);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: var(--bg-soft);
   color: var(--fg);
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -267,36 +274,48 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
   place-items: center;
 }
 
-/* Va encima de la escena y con fondo propio: algunas demos (Dolly & Zoom)
-   crecen hasta las esquinas y sin esto le pasarían por encima al texto. */
-.stage__hint {
+.stage:hover,
+.stage[aria-pressed='true'] {
+  border-color: var(--gray-300);
+  background: #ECE8E2;
+}
+
+/* Arriba a la derecha y con fondo propio: algunas demos (Dolly & Zoom)
+   crecen hasta las esquinas y sin esto le pasarían por encima. */
+.stage__play {
   position: absolute;
-  left: calc(var(--sp-2) - 0.5rem);
-  bottom: calc(var(--sp-2) - 0.25rem);
+  top: var(--sp-2);
+  right: var(--sp-2);
   z-index: 1;
-  padding: 0.25rem 0.5rem;
-  background: var(--bg-dark);
-  color: #9C948A;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--fg);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.stage__play svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+[data-playing='true'] .stage__play {
+  border-color: var(--ac);
+  background: var(--ac);
+  color: var(--paper);
 }
 
 /* ---------- Texto -------------------------------------------- */
 
 .body {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: var(--sp-2);
-  row-gap: var(--sp-1);
-  align-items: baseline;
-}
-
-.body__index {
-  grid-row: 1;
-  font-family: var(--font-display);
-  font-size: var(--fs-lead);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding-inline: 0.25rem;
 }
 
 .body__name {
@@ -306,23 +325,31 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
   letter-spacing: -0.03em;
 }
 
-.body__text,
-.body__use {
-  grid-column: 1 / -1;
-}
-
 .body__text {
   font-size: var(--fs-sm);
 }
 
 .body__more {
-  grid-column: 1 / -1;
-  justify-self: start;
-  padding-block: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  min-height: 44px;
   font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
+  color: var(--accent);
+}
+
+.body__more svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.body__more:hover svg {
+  transform: translateX(3px);
 }
 
 /* En su propia página la demo manda: más ancha y más baja, y la escena crece
@@ -370,7 +397,7 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
   font-size: var(--fs-label);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: #9C948A;
+  color: var(--gray-600);
 }
 
 .easing__dot {
@@ -564,13 +591,13 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
 }
 
 .overlay__line--dark {
-  background: #C9C3BA;
+  background: var(--gray-300);
 }
 
 .overlay__scrim {
   position: absolute;
   inset: 0;
-  background: #000;
+  background: var(--ink);
   opacity: 0;
   transition: opacity 0.5s var(--ease-out);
 }
@@ -583,7 +610,8 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
   display: grid;
   gap: 0.6rem;
   padding: 0.75rem 0.9rem 1rem;
-  background: var(--fg);
+  border-top: 1px solid var(--line);
+  background: var(--paper);
   transform: translateY(100%);
   transition: transform 0.8s var(--ease-out);
 }
@@ -596,7 +624,7 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
 }
 
 [data-playing='true'] .overlay__scrim {
-  opacity: 0.65;
+  opacity: 0.22;
 }
 
 [data-playing='true'] .overlay__sheet {
@@ -676,8 +704,8 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
 .obscure__panel {
   position: absolute;
   inset: 0;
-  border-top: 1px solid #3A3733;
-  background: #25221F;
+  border-top: 1px solid var(--line);
+  background: #E4DFD8;
   transform: translateY(52%);
   transition: transform 0.9s var(--ease-io);
 }
@@ -750,12 +778,12 @@ const formatted = computed(() => String(counter.value).replace(/\B(?=(\d{3})+(?!
 }
 
 .dim__layer--back {
-  background: #25221F;
+  background: #E4DFD8;
   transform: translate(-0.6rem, 0.6rem);
 }
 
 .dim__layer--mid {
-  background: #3A3733;
+  background: #D3CDC5;
   transform: translate(-0.3rem, 0.3rem);
 }
 

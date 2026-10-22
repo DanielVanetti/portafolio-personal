@@ -9,19 +9,12 @@ export const SITE = {
   /* Firma de autoría del pie. Va aparte del nombre legal porque es el
      alias con el que Daniel publica su trabajo. */
   author: 'Daniel Vanetti',
-  role: 'Desarrollador Full Stack',
-  tagline: 'Full Stack Developer · IA — Costa Rica',
   email: 'danielgonzalezpicado@gmail.com',
-  location: 'Liberia, Guanacaste, CR'
+  /** Dominio público: lo necesitan los enlaces hreflang, que deben ser absolutos. */
+  url: 'https://danielgonzalezportafolio.netlify.app'
 } as const
 
 export const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/DanielVanetti' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daniel-gonzález-picado' }
-] as const
-
-/** Franja de skills del marquee. */
-export const SKILLS = [
-  'C#', 'Python', 'PHP', 'JavaScript', 'React', 'Angular', 'Django',
-  'WordPress', 'SQL Server', 'Firebase', 'Docker', 'Git', 'Power BI', 'SCRUM'
 ] as const

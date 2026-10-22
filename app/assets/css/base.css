@@ -14,6 +14,14 @@ html {
      scroll durante el preloader la hace desaparecer y toda la página se
      ensancha de golpe: un layout shift enorme. */
   scrollbar-gutter: stable;
+  /* La landing navega por anclas: el salto a cada sección se desliza.
+     Con reduced-motion la regla de más abajo lo devuelve a auto. */
+  scroll-behavior: smooth;
+}
+
+/* Que el header fijo no tape el arranque de cada sección al saltar a ella. */
+section[id] {
+  scroll-margin-top: 4.5rem;
 }
 
 body,
@@ -237,7 +245,8 @@ a {
    si hay JavaScript y el usuario no pidió menos movimiento.
    Sin esa clase el contenido se ve tal cual, sin animación. */
 
-.js-motion [data-reveal='up'] {
+.js-motion [data-reveal='up'],
+.js-motion [data-reveal='intro'] {
   opacity: 0;
 }
 
