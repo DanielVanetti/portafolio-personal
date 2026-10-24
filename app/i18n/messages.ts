@@ -37,9 +37,13 @@ const es = {
 
   hero: {
     h1: 'Daniel González Picado — desarrollador full stack',
-    badge: 'Disponible para proyectos',
-    // Lo que sigue a la D: Daniel, Dev, Diseño.
-    words: ['aniel', 'ev', 'iseño'],
+    // Lo que sigue a la D: Daniel, Desarrollo, Diseño.
+    words: ['aniel', 'esarrollo', 'iseño'],
+    // Ancho de la palabra más larga ("Desarrollo") tal como se pinta, en em:
+    // la D rota más las letras sueltas que animan (4,36), con un 2 % de aire.
+    // Fija el tamaño máximo con el que cabe. Si cambian las palabras, medirlo
+    // de nuevo en el navegador: el ancho del texto en canvas no sirve.
+    wordsEm: 4.45,
     statement:
       'Construyo sistemas a medida e integraciones de IA para los procesos que una empresa usa todos los días.',
     ctaPrimary: 'Ver proyectos',
@@ -105,7 +109,6 @@ const es = {
   },
 
   teaser: {
-    label: 'Detalles',
     title: 'Lo que cuido en cada interfaz.',
     text: 'Doce principios de movimiento y seis prácticas de usabilidad, con demos que podés tocar.',
     cta: 'Ver los detalles'
@@ -231,8 +234,9 @@ const en: Messages = {
 
   hero: {
     h1: 'Daniel González Picado — full stack developer',
-    badge: 'Available for projects',
     words: ['aniel', 'ev', 'esign'],
+    // "Design": 2,87 em pintado.
+    wordsEm: 2.95,
     statement:
       'I build custom systems and AI integrations for the processes a business relies on every day.',
     ctaPrimary: 'See my work',
@@ -298,7 +302,6 @@ const en: Messages = {
   },
 
   teaser: {
-    label: 'Details',
     title: 'What I care about in every interface.',
     text: 'Twelve motion principles and six usability practices, with demos you can play with.',
     cta: 'Explore the details'

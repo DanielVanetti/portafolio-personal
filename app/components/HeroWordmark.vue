@@ -3,13 +3,18 @@ import { gsap } from 'gsap'
 
 /**
  * Wordmark del hero: una D fija que se rompe bajo el cursor (ShatterLetter)
- * y, a su lado, el resto de la palabra rotando: Daniel → Dev → Diseño.
+ * y, a su lado, el resto de la palabra rotando: Daniel → Desarrollo → Diseño
+ * (o Daniel → Dev → Design en inglés).
  *
  * Cada cambio saca las letras hacia arriba con desenfoque y trae las nuevas
  * desde abajo, en cascada. El primer valor es el nombre: es lo que ve quien
  * llega sin JavaScript o con reduced-motion, y el ciclo vuelve a él.
  */
-const props = defineProps<{ words: readonly string[] }>()
+const props = defineProps<{
+  words: readonly string[]
+  /** Ancho en em de la palabra completa más larga: con él, nunca desborda. */
+  em: number
+}>()
 
 const index = ref(0)
 const letters = computed(() => Array.from(props.words[index.value] ?? ''))
@@ -81,7 +86,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="rootRef" class="wm" aria-hidden="true">
+  <div ref="rootRef" class="wm" :style="{ '--wm-em': em }" aria-hidden="true">
     <ShatterLetter letter="D" class="wm__d" />
     <span ref="suffixRef" class="wm__suffix">
       <span v-for="(ch, i) in letters" :key="`${index}-${i}`" class="wm__ch">{{ ch }}</span>
@@ -90,7 +95,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* El padre fija el tamaño máximo en --wm-max y es contenedor de consulta:
+   100cqi es su ancho. La palabra más larga ocupa como mucho ese ancho, así
+   que en un idioma con palabras largas el wordmark se reduce solo lo justo. */
 .wm {
+  font-size: min(var(--wm-max, 1em), calc(100cqi / var(--wm-em)));
   display: flex;
   align-items: baseline;
   font-family: var(--font-display);

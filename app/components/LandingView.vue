@@ -43,15 +43,10 @@ onUnmounted(() => clearTimeout(copyTimer))
       <DotField />
 
       <div class="wrap hero__inner">
-        <p class="badge" data-reveal="intro">
-          <span class="badge__dot" aria-hidden="true"></span>
-          {{ t.hero.badge }}
-        </p>
-
         <h1 class="sr-only">{{ t.hero.h1 }}</h1>
 
         <div class="hero__mark" data-reveal="intro">
-          <HeroWordmark :words="t.hero.words" />
+          <HeroWordmark :words="t.hero.words" :em="t.hero.wordsEm" />
         </div>
 
         <div class="hero__foot">
@@ -131,6 +126,24 @@ onUnmounted(() => clearTimeout(copyTimer))
       </div>
     </section>
 
+    <!-- ── Detalles: banda de acceso ───────────────────────── -->
+    <section class="band-section" aria-labelledby="band-title">
+      <div class="wrap">
+        <SpotlightCard class="band" data-reveal="up">
+          <div class="band__shapes" aria-hidden="true">
+            <span class="band__shape band__shape--circle"></span>
+            <span class="band__shape band__shape--square"></span>
+            <span class="band__shape band__shape--pill"></span>
+          </div>
+          <div class="band__copy">
+            <h2 id="band-title" class="band__title">{{ t.teaser.title }}</h2>
+            <p class="band__text muted">{{ t.teaser.text }}</p>
+          </div>
+          <MagneticButton :label="t.teaser.cta" :to="path('details')" variant="ghost" class="band__cta" />
+        </SpotlightCard>
+      </div>
+    </section>
+
     <!-- ── Proyectos ────────────────────────────────────────── -->
     <section id="work" class="section work">
       <div class="wrap">
@@ -142,36 +155,10 @@ onUnmounted(() => clearTimeout(copyTimer))
       </div>
     </section>
 
-    <!-- ── Detalles ─────────────────────────────────────────── -->
-    <section class="teaser">
-      <div class="wrap">
-        <NuxtLink :to="path('details')" class="teaser__card" data-reveal="up">
-          <SpotlightCard class="teaser__inner">
-            <div class="teaser__copy">
-              <SectionLabel index="04" :text="t.teaser.label" />
-              <h2 class="teaser__title">{{ t.teaser.title }}</h2>
-              <p class="teaser__text muted">{{ t.teaser.text }}</p>
-            </div>
-            <span class="teaser__cta">
-              {{ t.teaser.cta }}
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-            <div class="teaser__shapes" aria-hidden="true">
-              <span class="teaser__shape teaser__shape--circle"></span>
-              <span class="teaser__shape teaser__shape--square"></span>
-              <span class="teaser__shape teaser__shape--pill"></span>
-            </div>
-          </SpotlightCard>
-        </NuxtLink>
-      </div>
-    </section>
-
     <!-- ── Contacto ─────────────────────────────────────────── -->
     <section id="contact" class="section contact">
       <div class="wrap">
-        <SectionLabel index="05" :text="t.contact.label" />
+        <SectionLabel index="04" :text="t.contact.label" />
         <h2 class="contact__title" data-reveal="lines">{{ t.contact.title }}</h2>
 
         <div class="grid contact__grid">
@@ -234,49 +221,11 @@ onUnmounted(() => clearTimeout(copyTimer))
   padding-block: var(--sp-6) var(--sp-6);
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  align-self: flex-start;
-  padding: 0.5rem 0.95rem 0.5rem 0.75rem;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-pill);
-  background: rgba(250, 249, 246, 0.7);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-}
-
-.badge__dot {
-  position: relative;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--coffee);
-}
-
-/* Pulso: un anillo que crece y se apaga. Solo transform y opacity. */
-.badge__dot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--coffee);
-  animation: pulse 2.2s var(--ease-out) infinite;
-}
-
-@keyframes pulse {
-  from { transform: scale(1); opacity: 0.55; }
-  to { transform: scale(3); opacity: 0; }
-}
-
 .hero__mark {
   margin-block: auto;
   padding-block: var(--sp-6);
-  font-size: clamp(5.25rem, min(26vw, 40svh), 21rem);
+  container-type: inline-size;
+  --wm-max: clamp(5.25rem, min(26vw, 40svh), 21rem);
 }
 
 .hero__foot {
@@ -460,134 +409,101 @@ onUnmounted(() => clearTimeout(copyTimer))
   }
 }
 
-/* ── Detalles (acceso) ──────────────────────────────────── */
+/* ── Detalles: banda de acceso ─────────────────────────── */
 
-.teaser {
-  padding-bottom: var(--section-y);
+.band-section {
+  padding-top: var(--sp-8);
 }
 
-.teaser__card {
-  display: block;
-  border-radius: var(--radius);
-}
-
-.teaser__inner {
+.band {
   display: grid;
-  gap: var(--sp-6);
-  padding: var(--sp-6) var(--sp-4);
-  transition: transform 0.5s var(--ease-out), border-color 0.4s var(--ease-out);
+  gap: var(--sp-3);
+  align-items: center;
+  padding: var(--sp-4);
 }
 
-.teaser__card:hover .teaser__inner {
-  transform: translateY(-4px);
-}
-
-.teaser__copy {
+.band__copy {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-2);
+  gap: 0.35rem;
 }
 
-.teaser__title {
-  max-width: 16ch;
-  font-size: var(--fs-h2);
-  line-height: var(--lh-tight);
-  letter-spacing: -0.04em;
+.band__title {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.03em;
 }
 
-.teaser__text {
-  max-width: 40ch;
+.band__text {
+  font-size: var(--fs-sm);
 }
 
-.teaser__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  align-self: end;
-  font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+.band__cta {
+  justify-self: start;
 }
 
-.teaser__cta svg {
-  width: 1rem;
+/* Tres formas pequeñas que se reacomodan al pasar el cursor: un adelanto de
+   lo que hay en Detalles, sin contarlo con texto. */
+.band__shapes {
+  position: relative;
+  width: 5.5rem;
+  height: 3.5rem;
+}
+
+.band__shape {
+  position: absolute;
+  transition: transform 0.7s var(--ease-out), border-radius 0.7s var(--ease-out);
+}
+
+.band__shape--circle {
+  top: 0.25rem;
+  left: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--coffee);
+}
+
+.band__shape--square {
+  top: 0;
+  left: 2.4rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 5px;
+  background: var(--ink);
+}
+
+.band__shape--pill {
+  bottom: 0;
+  left: 1.6rem;
+  width: 3.4rem;
   height: 1rem;
-  transition: transform var(--dur-fast) var(--ease-out);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-pill);
 }
 
-.teaser__card:hover .teaser__cta svg {
-  transform: translateX(4px);
+.band:hover .band__shape--circle {
+  transform: translate(3.5rem, 1.4rem) scale(0.7);
 }
 
-/* Tres formas que se reacomodan al pasar el cursor: un adelanto de las demos. */
-.teaser__shapes {
-  display: none;
+.band:hover .band__shape--square {
+  transform: translate(-2.4rem, 1.9rem) rotate(90deg);
+  border-radius: 50%;
+}
+
+.band:hover .band__shape--pill {
+  transform: translate(-1.6rem, -2.5rem);
 }
 
 @media (min-width: 900px) {
-  .teaser__inner {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr auto;
-    padding: var(--sp-8);
+  .band {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-4) var(--sp-3) var(--sp-3);
   }
 
-  .teaser__copy {
-    grid-row: 1 / 3;
-  }
-
-  .teaser__shapes {
-    position: relative;
-    display: block;
-    width: 13rem;
-    height: 9rem;
+  .band__cta {
     justify-self: end;
-  }
-
-  .teaser__shape {
-    position: absolute;
-    transition: transform 0.8s var(--ease-out), background-color 0.6s var(--ease-out);
-  }
-
-  .teaser__shape--circle {
-    left: 0;
-    top: 1.5rem;
-    width: 4.5rem;
-    height: 4.5rem;
-    border-radius: 50%;
-    background: var(--coffee);
-  }
-
-  .teaser__shape--square {
-    left: 4.5rem;
-    top: 0;
-    width: 4rem;
-    height: 4rem;
-    border-radius: var(--radius-sm);
-    background: var(--ink);
-  }
-
-  .teaser__shape--pill {
-    left: 7rem;
-    top: 5.5rem;
-    width: 6rem;
-    height: 2.25rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--ink);
-  }
-
-  /* Al pasar el cursor las tres formas intercambian sitio sin pisarse. */
-  .teaser__card:hover .teaser__shape--circle {
-    transform: translate(8.5rem, 3rem) scale(0.8);
-  }
-
-  .teaser__card:hover .teaser__shape--square {
-    transform: translate(-1rem, 4.5rem) rotate(90deg);
-    border-radius: 50%;
-  }
-
-  .teaser__card:hover .teaser__shape--pill {
-    transform: translate(-7rem, -5rem);
   }
 }
 

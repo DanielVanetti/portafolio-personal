@@ -2,10 +2,14 @@
 import { SITE } from '~/data/site'
 
 /**
- * Cabecera fija. En escritorio, una píldora se desliza bajo el enlace que
- * está bajo el cursor (y descansa en el de la sección visible). En móvil los
- * enlaces viven en un menú a pantalla completa. Al bajar de la portada gana
- * un fondo translúcido para no pelear con el contenido de debajo.
+ * Cabecera fija. Solo enlaza secciones de la landing: Detalles tiene su
+ * propia banda dentro de la página y su enlace en el pie, para que la
+ * navegación se lea como la de una sola página.
+ *
+ * En escritorio, una píldora se desliza bajo el enlace que está bajo el
+ * cursor (y descansa en el de la sección visible). En móvil los enlaces viven
+ * en un menú a pantalla completa. Al bajar de la portada gana un fondo
+ * translúcido para no pelear con el contenido de debajo.
  */
 const { t, locale, otherLocale, path, section, switchTo } = useLocale()
 const route = useRoute()
@@ -13,12 +17,10 @@ const route = useRoute()
 const items = computed(() => [
   { id: 'about', label: t.value.nav.about, to: section('about') },
   { id: 'work', label: t.value.nav.work, to: section('work') },
-  { id: 'details', label: t.value.nav.details, to: path('details') },
   { id: 'contact', label: t.value.nav.contact, to: section('contact') }
 ])
 
 const onHome = computed(() => route.path === path('home'))
-const onDetails = computed(() => route.path.startsWith(path('details')))
 
 // --- Sección visible ---
 const current = ref<string | null>(null)
@@ -42,7 +44,6 @@ const watchSections = () => {
 }
 
 const activeId = computed(() => {
-  if (onDetails.value) return 'details'
   if (current.value === 'stack') return 'about'
   return current.value
 })
@@ -133,7 +134,7 @@ onUnmounted(() => {
                 :to="item.to"
                 class="nav__link"
                 :class="{ 'is-active': activeId === item.id }"
-                :aria-current="activeId === item.id ? (item.id === 'details' ? 'page' : 'location') : undefined"
+                :aria-current="activeId === item.id ? 'location' : undefined"
                 @pointerenter="placePill($event.currentTarget as Element)"
                 @focus="placePill($event.currentTarget as Element)"
               >
