@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
- * Etiqueta editorial de sección: ( 01 — SOBRE MÍ )
- * El índice va en café; el resto en gris templado.
+ * Etiqueta de sección: índice en café, una línea corta y el nombre.
+ *   01 ── SOBRE MÍ
  */
 defineProps<{
   index?: string
@@ -11,11 +11,9 @@ defineProps<{
 
 <template>
   <p class="label section-label">
-    <span aria-hidden="true">(</span>
     <span v-if="index" class="label__index">{{ index }}</span>
-    <span v-if="index" aria-hidden="true">—</span>
+    <span v-if="index" class="section-label__line" aria-hidden="true"></span>
     <span>{{ text }}</span>
-    <span aria-hidden="true">)</span>
   </p>
 </template>
 
@@ -23,6 +21,13 @@ defineProps<{
 .section-label {
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.75em;
+}
+
+.section-label__line {
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
 }
 </style>

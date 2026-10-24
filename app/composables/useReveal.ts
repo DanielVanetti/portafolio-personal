@@ -73,6 +73,18 @@ export function useReveal() {
         )
       })
 
+      // --- Entrada de la portada ---
+      // Lo que se ve al llegar no puede esperar a un scroll: entra en
+      // cascada en cuanto se abre la compuerta, esté donde esté en pantalla.
+      const intro = gsap.utils.toArray<HTMLElement>('[data-reveal="intro"]')
+      if (intro.length) {
+        gsap.fromTo(
+          intro,
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12 }
+        )
+      }
+
       // --- Campo del hero: tintes a la deriva ---
       // Ciclos largos y primos entre sí para que los tres nunca vuelvan a
       // coincidir: el fondo no debe tener un "loop" perceptible.

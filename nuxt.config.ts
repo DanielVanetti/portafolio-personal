@@ -1,3 +1,5 @@
+import { LESSON_SLUGS } from './app/data/lessons'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -25,7 +27,7 @@ export default defineNuxtConfig({
            * queda visible desde el inicio y no hay cortina que levantar.
            */
           innerHTML:
-            "try{var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('js-motion');if(!sessionStorage.getItem('dg-preloader'))d.classList.add('js-preloader')}}catch(e){}",
+            "try{var d=document.documentElement;d.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('js-motion');if(!sessionStorage.getItem('dg-preloader'))d.classList.add('js-preloader')}}catch(e){}",
           tagPosition: 'head'
         }
       ]
@@ -43,6 +45,14 @@ export default defineNuxtConfig({
     defaults: { fallbacks: { serif: ['Georgia'], 'sans-serif': ['Helvetica Neue'] } }
   },
 
+  // Sobre Mí, Proyectos y Contacto pasaron a ser secciones de la landing:
+  // sus direcciones antiguas llevan a la sección correspondiente.
+  routeRules: {
+    '/sobre-mi': { redirect: { to: '/#about', statusCode: 301 } },
+    '/proyectos': { redirect: { to: '/#work', statusCode: 301 } },
+    '/contacto': { redirect: { to: '/#contact', statusCode: 301 } }
+  },
+
   nitro: {
     /**
      * Fijado a proposito. Nitro detecta el entorno de Netlify y cambia solo
@@ -54,7 +64,18 @@ export default defineNuxtConfig({
 
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/404.html']
+      // Las páginas de cada principio también salen de los enlaces de las
+      // tarjetas; listarlas aquí garantiza que ninguna se quede sin generar,
+      // en los dos idiomas. Las tres rutas viejas generan su redirección.
+      routes: [
+        '/',
+        '/en',
+        '/404.html',
+        ...LESSON_SLUGS.flatMap(slug => [`/detalles/${slug}`, `/en/details/${slug}`]),
+        '/sobre-mi',
+        '/proyectos',
+        '/contacto'
+      ]
     }
   }
 })

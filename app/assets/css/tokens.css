@@ -16,10 +16,19 @@
   --coffee-soft: #A78B72; /* acento sobre fondo oscuro */
   --bg-dark: #121110;     /* secciones invertidas */
   --ink-dark: #F5F3EF;    /* texto sobre oscuro */
+  --bg-soft: #F1EEE9;     /* superficies de tarjeta sobre --bg */
+  --dark-soft: #1C1A18;   /* superficies de tarjeta sobre --bg-dark */
+
+  /* Radios pequeños y consistentes: superficies que se tocan (tarjetas,
+     botones, escenarios de demo). El layout sigue siendo de líneas rectas. */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
 
   /* Alias que cambian dentro de .invert — permiten que un mismo
      componente funcione sobre fondo claro u oscuro sin duplicar CSS. */
   --surface: var(--bg);
+  --card: var(--bg-soft);
   --text: var(--ink);
   --text-muted: var(--gray-600);
   --rule: var(--gray-300);
@@ -84,6 +93,7 @@
    café claro, que sí alcanza contraste AA sobre negro. */
 .invert {
   --surface: var(--bg-dark);
+  --card: var(--dark-soft);
   --text: var(--ink-dark);
   --text-muted: #9C948A;
   --rule: #2E2B28;

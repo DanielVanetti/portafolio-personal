@@ -58,9 +58,8 @@ Los titulares grandes usan `clamp()` para escalar entre móvil y desktop.
 
 Estos elementos son la identidad visual del sitio; usarlos con consistencia:
 
-- Etiquetas entre paréntesis: `( 01 — SOBRE MÍ )`
+- Etiquetas de sección: índice en café, una línea corta y el nombre: `01 ── SOBRE MÍ`
 - Índices numerados: `01 — 05`
-- Coordenadas y año en el footer: `10.63°N, 85.44°W — Liberia, CR`
 - Líneas horizontales que se "dibujan" al hacer scroll
 
 ### Imágenes
@@ -68,6 +67,19 @@ Estos elementos son la identidad visual del sitio; usarlos con consistencia:
 Este proyecto **no tiene fotos ni capturas**. Los proyectos se representan con
 **composiciones tipográficas monocromas** (índice grande + nombre + stack, sobre
 fondo oscuro). **Prohibido el stock photography** — antes nada que una foto genérica.
+
+### Superficies y radios
+
+La estructura de la página sigue siendo de líneas rectas (hairlines, retícula).
+Las superficies que se tocan llevan radios pequeños y consistentes:
+
+- `--radius` (16px) para tarjetas, escenarios de demo y paneles; `--radius-sm`
+  (10px) para campos y avisos; `--radius-pill` para botones, chips y la nav.
+- `--bg-soft` (#F1EEE9) es la superficie de tarjeta sobre `--bg`;
+  `--dark-soft` sobre `--bg-dark`. El alias `--card` elige la correcta.
+- El único "degradado" permitido es el foco de luz de `SpotlightCard`: un halo
+  radial café de opacidad ≤16 %, visible solo bajo el cursor. Las máscaras
+  (`mask-image`) para disolver bordes no cuentan: no pintan color.
 
 ## Accesibilidad (no negociable)
 
@@ -82,5 +94,7 @@ fondo oscuro). **Prohibido el stock photography** — antes nada que una foto ge
 - Café usado como fondo de sección o en grandes superficies.
 - Tamaños intermedios fuera de la escala (14px, 15px, 17px…).
 - Lorem ipsum o copy de plantilla ("Bienvenido a mi web").
-- Sombras difusas, degradados, bordes redondeados grandes — no pertenecen a la
-  dirección editorial.
+- Sombras difusas, degradados de color y radios fuera de los tokens — no
+  pertenecen a la dirección editorial.
+- Textos de ayuda tipo "Probá…", "Scroll", "Pasá el cursor": la interfaz se
+  tiene que entender sola.
