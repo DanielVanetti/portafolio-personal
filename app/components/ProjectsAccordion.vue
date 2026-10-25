@@ -15,7 +15,13 @@ import type { Project } from '~/data/projects'
  */
 const props = defineProps<{
   projects: readonly Project[]
-  labels: { problem: string, did: string, result: string }
+  labels: {
+    problem: string
+    did: string
+    result: string
+    visit: string
+    shot: (name: string) => string
+  }
 }>()
 
 const open = ref<string | null>(props.projects[0]?.index ?? null)
@@ -88,7 +94,7 @@ onUnmounted(() => gsap.killTweensOf(plateRef.value))
         >
           <span class="acc__index">{{ project.index }}</span>
           <span class="acc__title">{{ project.title }}</span>
-          <span class="acc__context mono-meta muted">{{ project.context }}</span>
+          <span class="acc__context mono-meta muted">{{ project.kind }} · {{ project.context }}</span>
           <span class="acc__icon" aria-hidden="true"></span>
         </button>
       </h3>
@@ -101,29 +107,52 @@ onUnmounted(() => gsap.killTweensOf(plateRef.value))
         :inert="mounted && open !== project.index ? true : undefined"
       >
         <div class="acc__inner">
-          <div class="acc__cols">
-            <div>
-              <p class="label acc__label">{{ labels.problem }}</p>
-              <p>{{ project.problem }}</p>
-            </div>
-            <div>
-              <p class="label acc__label">{{ labels.did }}</p>
-              <p>{{ project.work }}</p>
-            </div>
-            <div>
-              <p class="label acc__label">{{ labels.result }}</p>
-              <p>{{ project.result }}</p>
+          <div class="acc__body" :class="{ 'has-media': project.image }">
+            <component
+              :is="project.url ? 'a' : 'div'"
+              v-if="project.image"
+              class="acc__media"
+              :href="project.url"
+              :target="project.url ? '_blank' : undefined"
+              :rel="project.url ? 'noopener noreferrer' : undefined"
+            >
+              <img :src="project.image" :alt="labels.shot(project.title)" width="1280" height="800" loading="lazy" decoding="async">
+            </component>
+            <div class="acc__cols">
+              <div>
+                <p class="label acc__label">{{ labels.problem }}</p>
+                <p>{{ project.problem }}</p>
+              </div>
+              <div>
+                <p class="label acc__label">{{ labels.did }}</p>
+                <p>{{ project.work }}</p>
+              </div>
+              <div>
+                <p class="label acc__label">{{ labels.result }}</p>
+                <p>{{ project.result }}</p>
+              </div>
             </div>
           </div>
-          <ul class="acc__stack" role="list">
-            <li v-for="tech in project.stack" :key="tech" class="acc__chip">{{ tech }}</li>
-          </ul>
+          <div class="acc__foot">
+            <ul class="acc__stack" role="list">
+              <li v-for="tech in project.stack" :key="tech" class="acc__chip">{{ tech }}</li>
+            </ul>
+            <a v-if="project.url" :href="project.url" target="_blank" rel="noopener noreferrer" class="acc__visit">
+              {{ labels.visit }}<span class="sr-only">: {{ project.title }}</span>
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M5 11l6-6M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </article>
 
     <div ref="plateRef" class="acc__plate" aria-hidden="true">
-      <ProjectPlate v-if="active" :index="active.index" :title="active.title" :stack="active.stack" />
+      <template v-if="active">
+        <img v-if="active.image" :src="active.image" alt="" class="acc__plate-img" width="1280" height="800">
+        <ProjectPlate v-else :index="active.index" :title="active.title" :stack="active.stack" />
+      </template>
     </div>
   </div>
 </template>
@@ -249,10 +278,38 @@ html.js .acc__item:not(.is-open) .acc__panel {
   overflow: hidden;
 }
 
+.acc__body {
+  display: grid;
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-3);
+}
+
+/* La captura enlaza al sitio cuando está publicado. */
+.acc__media {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.acc__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.8s var(--ease-out);
+}
+
+a.acc__media:hover img {
+  transform: scale(1.03);
+}
+
 .acc__cols {
   display: grid;
   gap: var(--sp-3);
-  padding: 0 0 var(--sp-3) 0;
 }
 
 .acc__cols p:not(.acc__label) {
@@ -264,12 +321,43 @@ html.js .acc__item:not(.is-open) .acc__panel {
   color: var(--accent);
 }
 
+.acc__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding-bottom: var(--sp-6);
+}
+
 .acc__stack {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0;
-  padding: 0 0 var(--sp-6);
+  padding: 0;
+}
+
+.acc__visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.acc__visit svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.acc__visit:hover svg {
+  transform: translate(3px, -3px);
 }
 
 .acc__chip {
@@ -292,8 +380,19 @@ html.js .acc__item:not(.is-open) .acc__panel {
   opacity: 0;
 }
 
-.acc__plate :deep(.plate) {
+.acc__plate :deep(.plate),
+.acc__plate-img {
   border-radius: var(--radius);
+}
+
+.acc__plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--rule);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -309,14 +408,26 @@ html.js .acc__item:not(.is-open) .acc__panel {
     column-gap: var(--sp-4);
   }
 
-  .acc__cols {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-6);
+  .acc__body,
+  .acc__foot {
     padding-left: calc(4rem + var(--sp-4));
   }
 
-  .acc__stack {
-    padding-left: calc(4rem + var(--sp-4));
+  .acc__cols {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-6);
+  }
+
+  /* Con captura: imagen a la izquierda, el relato en una columna a la derecha. */
+  .acc__body.has-media {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--sp-6);
+    align-items: start;
+  }
+
+  .has-media .acc__cols {
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
   }
 
   .acc__context {

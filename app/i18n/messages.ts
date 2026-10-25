@@ -55,16 +55,12 @@ const es = {
   about: {
     label: 'Sobre mí',
     reveal:
-      'Soy ingeniero en Sistemas de Información y desarrollador web. Me gusta la parte del oficio que rara vez sale en las demos: sistemas en producción, datos que no pueden perderse y personas que necesitan que algo funcione hoy.',
-    body: [
-      'Vivo en Liberia, Guanacaste, y llevo un par de años trabajando en proyectos que ya tenían usuarios antes de que yo llegara.',
-      'Estudié Ingeniería en Sistemas de Información en la Universidad Nacional y ahora curso la Licenciatura en Desarrollo Web. En paralelo he trabajado en migraciones de escritorio a la web, en aplicaciones móviles y en el mantenimiento de aplicaciones empresariales.',
-      'Ese último trabajo fue el que más me formó: cuando el error que corregís le impide trabajar a alguien en ese momento, aprendés rápido a leer código ajeno y a medir qué más puede romperse con tu cambio.'
-    ],
-    stats: [
-      { value: 5, from: 0, label: 'proyectos destacados' },
-      { value: 14, from: 0, label: 'tecnologías en uso' },
-      { value: 2025, from: 2015, label: 'ingeniero en Sistemas' }
+      'Aprendí construyendo: proyectos académicos, sistemas para empresas y sitios para clientes reales. Hoy sumo IA y tecnologías emergentes a cada sistema, para que le devuelva tiempo a quien lo usa.',
+    // Lo que hago ahora, en tres verbos.
+    now: [
+      { verb: 'Estudio', text: 'La Licenciatura en Desarrollo Web en la Universidad Nacional, después de Ingeniería en Sistemas.' },
+      { verb: 'Construyo', text: 'Software a medida, plataformas y sitios web con KnotFix, de la idea a producción.' },
+      { verb: 'Exploro', text: 'Agentes de IA, automatización e integraciones que le quitan horas a las tareas repetitivas.' }
     ],
     principlesTitle: 'Cómo trabajo',
     principles: [
@@ -102,10 +98,12 @@ const es = {
 
   work: {
     label: 'Proyectos',
-    title: 'Cinco proyectos, contados por el problema que resolvían.',
+    title: 'Siete proyectos, contados por el problema que resolvían.',
     problem: 'El problema',
-    did: 'Qué hice',
-    result: 'Qué quedó'
+    did: 'Qué hicimos',
+    result: 'Qué quedó',
+    visit: 'Ver el sitio',
+    shot: (name: string) => `Captura de ${name}`
   },
 
   teaser: {
@@ -127,6 +125,10 @@ const es = {
   },
 
   footer: {
+    lead: 'Hecho a mano en Liberia, Costa Rica.',
+    localTime: 'Hora local',
+    navTitle: 'Navegación',
+    socialTitle: 'En línea',
     made: 'Diseñado y desarrollado por',
     rights: 'Todos los derechos reservados',
     top: 'Volver arriba'
@@ -248,16 +250,11 @@ const en: Messages = {
   about: {
     label: 'About',
     reveal:
-      "I'm an Information Systems engineer and web developer. I enjoy the part of the craft that rarely makes it into demos: systems in production, data that can't be lost, and people who need something to work today.",
-    body: [
-      "I live in Liberia, Guanacaste, and I've spent the last couple of years working on projects that already had users before I arrived.",
-      "I studied Information Systems Engineering at Universidad Nacional and I'm now pursuing a Licentiate in Web Development. Along the way I've worked on desktop-to-web migrations, mobile apps and the maintenance of business applications.",
-      "That last job taught me the most: when the bug you're fixing is stopping someone from working right now, you learn fast to read code you didn't write and to weigh what else your change might break."
-    ],
-    stats: [
-      { value: 5, from: 0, label: 'featured projects' },
-      { value: 14, from: 0, label: 'technologies in use' },
-      { value: 2025, from: 2015, label: 'systems engineer' }
+      'I learned by building: academic projects, systems for companies and websites for real clients. Today I bring AI and emerging technology into every system, so it gives people back their time.',
+    now: [
+      { verb: 'Studying', text: 'A Licentiate in Web Development at Universidad Nacional, after a degree in Systems Engineering.' },
+      { verb: 'Building', text: 'Custom software, platforms and websites with KnotFix, from idea to production.' },
+      { verb: 'Exploring', text: 'AI agents, automation and integrations that take hours off repetitive work.' }
     ],
     principlesTitle: 'How I work',
     principles: [
@@ -295,10 +292,12 @@ const en: Messages = {
 
   work: {
     label: 'Work',
-    title: 'Five projects, told by the problem they solved.',
+    title: 'Seven projects, told by the problem they solved.',
     problem: 'The problem',
-    did: 'What I did',
-    result: 'What was left'
+    did: 'What we did',
+    result: 'What was left',
+    visit: 'Visit the site',
+    shot: (name: string) => `Screenshot of ${name}`
   },
 
   teaser: {
@@ -320,6 +319,10 @@ const en: Messages = {
   },
 
   footer: {
+    lead: 'Handmade in Liberia, Costa Rica.',
+    localTime: 'Local time',
+    navTitle: 'Navigation',
+    socialTitle: 'Online',
     made: 'Designed and built by',
     rights: 'All rights reserved',
     top: 'Back to top'
