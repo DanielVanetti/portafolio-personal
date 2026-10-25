@@ -70,20 +70,13 @@ onUnmounted(() => clearTimeout(copyTimer))
 
         <ScrollRevealText class="about__reveal" :text="t.about.reveal" />
 
-        <div class="grid about__grid">
-          <div class="about__body" data-reveal="up">
-            <p v-for="paragraph in t.about.body" :key="paragraph">{{ paragraph }}</p>
-          </div>
-
-          <dl class="stats" data-reveal="up">
-            <div v-for="stat in t.about.stats" :key="stat.label" class="stat">
-              <dt class="stat__label mono-meta muted">{{ stat.label }}</dt>
-              <dd class="stat__value">
-                <NumberTicker :value="stat.value" :from="stat.from" />
-              </dd>
-            </div>
-          </dl>
-        </div>
+        <ol class="now" role="list">
+          <li v-for="(item, i) in t.about.now" :key="item.verb" class="now__item" data-reveal="up">
+            <span class="now__index" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span class="now__verb">{{ item.verb }}</span>
+            <span class="now__text muted">{{ item.text }}</span>
+          </li>
+        </ol>
 
         <div class="about__sub">
           <h2 class="about__subtitle">{{ t.about.principlesTitle }}</h2>
@@ -294,38 +287,66 @@ onUnmounted(() => clearTimeout(copyTimer))
   letter-spacing: -0.03em;
 }
 
-.about__grid {
-  margin-top: var(--sp-12);
-  row-gap: var(--sp-8);
-}
-
-.about__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-}
-
-.stats {
+/* Tres verbos en grande: lo que hago ahora, sin párrafos. */
+.now {
   display: grid;
-  gap: var(--sp-2);
-  margin: 0;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 0.25rem;
-  padding: var(--sp-3) 0;
+  margin: var(--sp-12) 0 0;
+  padding: 0;
+  list-style: none;
   border-top: var(--hairline);
 }
 
-.stat__value {
-  margin: 0;
+.now__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--sp-2);
+  row-gap: var(--sp-1);
+  align-items: baseline;
+  padding-block: var(--sp-4);
+  border-bottom: var(--hairline);
+}
+
+.now__index {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+}
+
+.now__verb {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.04em;
+  transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.now__text {
+  grid-column: 2;
+  max-width: 34ch;
+  font-size: var(--fs-sm);
+}
+
+.now__item:hover .now__verb {
+  transform: translateX(0.4rem);
+  color: var(--accent);
+}
+
+@media (min-width: 900px) {
+  .now {
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: var(--hairline);
+  }
+
+  .now__item {
+    padding: var(--sp-6) var(--sp-4) var(--sp-6) 0;
+    border-bottom: 0;
+  }
+
+  .now__item + .now__item {
+    padding-left: var(--sp-4);
+    border-left: var(--hairline);
+  }
 }
 
 .about__sub {
@@ -395,15 +416,6 @@ onUnmounted(() => clearTimeout(copyTimer))
 }
 
 @media (min-width: 900px) {
-  .about__body {
-    grid-column: 1 / 7;
-  }
-
-  .stats {
-    grid-column: 8 / 13;
-    align-self: start;
-  }
-
   .principles {
     grid-template-columns: repeat(3, 1fr);
   }
